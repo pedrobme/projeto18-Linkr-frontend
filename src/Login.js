@@ -1,13 +1,17 @@
 import styled from 'styled-components';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link} from "react-router-dom";
 import axios from 'axios';
+import { LoginContext } from "./auth";
 
 
 export default function Login(){
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const {setToken} = useContext(LoginContext)
+
+
 
 
     function logar(event){
@@ -19,7 +23,11 @@ export default function Login(){
         })
         
         requisicao.then(response => {
-            console.log(response.data)
+            setToken(response.data);
+            console.log(response.data);
+
+            
+
         })
         requisicao.catch(error => {
             console.log(error);
