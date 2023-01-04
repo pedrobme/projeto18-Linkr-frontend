@@ -1,0 +1,11 @@
+body{
+    background-color: #333333
+    ;
+}
+::placeholder{
+    font-family: 'Oswald', sans-serif;
+    color: #9F9F9F;
+    font-size: 27px;
+    padding-left:17px;
+
+}
