@@ -43,24 +43,103 @@ export default function Login(){
                 <p>linkr</p>
                 <div>save, share and discover the best links on the web</div>
             </Linkr>
-            <Signup onSubmit={logar}>
-                <input type="text" placeholder="e-mail" value={email} onChange={e => setEmail(e.target.value)}></input>
-                <input type="password" placeholder="password" value={password} onChange={e => setPassword(e.target.value)}></input>
-                <button type="submit">Log In</button>
-                <Link to="/signup">
-                    <Logar>First time? Create an account!</Logar>
-                </Link>
-            </Signup>
+            <Form>
+                <Signup onSubmit={logar}>
+                    <input type="text" placeholder="e-mail" value={email} onChange={e => setEmail(e.target.value)}></input>
+                    <input type="password" placeholder="password" value={password} onChange={e => setPassword(e.target.value)}></input>
+                    <button type="submit">Log In</button>
+                    <Link to="/signup">
+                        <Logar>First time? Create an account!</Logar>
+                    </Link>
+                </Signup>
+            </Form>
         </Title>
        
         </>
     )
 }
+const Title = styled.div`
+    display:flex;
+    flex-direction:row;
+    @media (max-width: 375px) {
+        display:flex;
+        flex-direction:column;        
+    }
+
+`
+
+const Linkr = styled.div`
+   width:905px;
+   background: #151515;
+   box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+   height: 1024px;
+   p{
+    font-family: 'Passion One';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 106px;
+    line-height: 117px;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    margin-left:140px;
+    margin-top:301px;
+   }
+   div{
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 43px;
+    line-height: 64px;      
+    color: #FFFFFF;
+    width: 442px;
+    height: 128px;
+    margin-left:144px;
+
+   }
+   @media (max-width: 375px) {
+        height: 225px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        p{
+            font-family: 'Passion One';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 76px;
+            line-height: 84px;
+            letter-spacing: 0.05em;
+            color: #FFFFFF;
+            margin-top:10px;
+            padding-right:102px;
+        }
+        div{
+            font-size: 23px;
+            font-family: 'Oswald';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 34px;
+            text-align: center;
+            color: #FFFFFF;
+           padding-right:100px;
+        }
+    }
+
+
+`
+const Form = styled.div`
+    width:535px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`
 const Signup = styled.form`
     display:flex;
     flex-direction:column;
-    margin-top:274px;
-    margin-left:652px;
+    justify-content:center;
+    
+    
     input:nth-child(1){
         width: 429px;
         height: 65px;  
@@ -69,6 +148,20 @@ const Signup = styled.form`
 
     }
     input:nth-child(2){
+        width: 429px;
+        height: 65px; 
+        border-radius: 6px;
+        border:none;
+        margin-top:13px;
+    }
+    input:nth-child(3){
+        width: 429px;
+        height: 65px;  
+        border-radius: 6px;
+        border:none;
+        margin-top:13px;
+    }
+    input:nth-child(4){
         width: 429px;
         height: 65px; 
         border-radius: 6px;
@@ -88,12 +181,23 @@ const Signup = styled.form`
     @media (max-width: 375px) {
         display:flex;
         justify-content:center;
+        align-items:center;
         flex-direction:column;
-       margin-top:140px;
-       margin-left:300px;
-       width:100%;
+        margin-top:40px;
+        margin-left:400px;
+
+        text-align:center;
+        input{
+            width: 375px;
+            height: 55px;
+            left: 23px;
+            top: 215px;
+            background: #FFFFFF;
+            border-radius: 6px;
+        }
         
     }
+   
    
 `
 const Logar = styled.p`
@@ -104,59 +208,6 @@ const Logar = styled.p`
     justify-content:center;
     margin-top: 36px;
     text-decoration-line: underline;
+    
 `
 
-const Title = styled.div`
-    display:flex;
-    background-color:#151515;
-    height:1024px;
-    width:1200px;
-    @media (max-width: 375px) {
-        width:100%px;
-        height: 350px;
-        flex-direction:column;
-    }
-}
-`
-const Linkr = styled.div`
-    margin-left:144px;
-    margin-top:301px;
-    p{
-        font-weight: 700;
-        line-height: 117px;
-        letter-spacing: 0.05em;
-        color: #FFFFFF;
-        font-family: 'Passion One', cursive;
-
-    }
-    p:nth-child(1){
-        font-size:106px;
-    }
-    div{
-        font-family: 'Oswald', sans-serif;
-        font-size:43px;
-        font-weight: 700;
-        line-height: 64px;
-        color: #FFFFFF;
-        width:500px;
-    }
-    @media (max-width: 375px) {
-        display:flex;
-        justify-content:center;
-        flex-direction:column;
-        margin-top:10px;
-        p{
-            margin-left:190.50px;
-            font-size:76px;
-            
-        }
-        div{
-            margin-left:100px;
-            display:flex;
-            justify-content:center;
-            
-        }
-        
-        
-    }
-`
