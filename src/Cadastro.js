@@ -23,6 +23,7 @@ export default function Cadastro() {
         })
         
         requisicao.then(response => {
+
             navigate('/');
             console.log(response.data)
         })
@@ -98,6 +99,15 @@ const Signup = styled.form`
         margin-top:13px;
         font-size: 20px;
     }
+    @media (max-width: 375px) {
+        display:flex;
+        justify-content:center;
+        flex-direction:column;
+       margin-top:140px;
+       margin-left:300px;
+        
+    }
+   
    
 `
 const Logar = styled.p`
@@ -115,6 +125,12 @@ const Title = styled.div`
     background-color:#151515;
     height:1024px;
     width:1200px;
+    @media (max-width: 375px) {
+            width:1200px;
+            height: 350px;
+            flex-direction:column;
+        }
+    }
 `
 const Linkr = styled.div`
     margin-left:144px;
@@ -138,4 +154,24 @@ const Linkr = styled.div`
         color: #FFFFFF;
         width:500px;
     }
+    @media (max-width: 375px) {
+        display:flex;
+        justify-content:center;
+        flex-direction:column;
+        margin-top:10px;
+        p{
+            margin-left:190.50px;
+            font-size:76px;
+            
+        }
+        div{
+            margin-left:100px;
+            display:flex;
+            justify-content:center;
+            
+        }
+        
+        
+    }
+
 `
