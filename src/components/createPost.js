@@ -6,39 +6,30 @@ const CreatePost = () => {
   const [text, setText] = useState("");
 
   return (
-    <Container>
-      <CreatePostBackground>
-        <LeftPannel>
-          <img src="https://post.healthline.com/wp-content/uploads/2020/08/3180-Pug_green_grass-732x549-thumbnail-732x549.jpg" />
-        </LeftPannel>
-        <MainContentContainer>
-          <h3>What are you going o share today?</h3>
-          <input
-            onChange={(event) => setLink(event.target.value)}
-            placeholder="Link: http://..."
-          ></input>
-          <input
-            onChange={(event) => setText(event.target.value)}
-            placeholder="Type details about your post (optional)"
-          ></input>
-          <ButtonPhantom></ButtonPhantom>
-          <button>Publicar</button>
-        </MainContentContainer>
-      </CreatePostBackground>
-    </Container>
+
+    <CreatePostBackground>
+      <LeftPannel>
+        <img src="https://post.healthline.com/wp-content/uploads/2020/08/3180-Pug_green_grass-732x549-thumbnail-732x549.jpg" />
+      </LeftPannel>
+      <MainContentContainer>
+        <h3>What are you going o share today?</h3>
+        <input
+          onChange={(event) => setLink(event.target.value)}
+          placeholder="Link: http://..."
+        ></input>
+        <input
+          onChange={(event) => setText(event.target.value)}
+          placeholder="Type details about your post (optional)"
+        ></input>
+        <ButtonPhantom></ButtonPhantom>
+        <button>Publicar</button>
+      </MainContentContainer>
+    </CreatePostBackground>
+
   );
 };
 
 // Styled components
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: #e5e5e5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 const CreatePostBackground = styled.div`
   width: 611px;

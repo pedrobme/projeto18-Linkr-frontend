@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import InfosPost from "./InfosPost";
+import CreatePost from "./components/createPost";
 
 export default function Timeline() {
 
@@ -22,6 +23,7 @@ export default function Timeline() {
 
     return (
         <Container>
+        <CreatePost/>
         <Posts>
             {posts.map((post) => <InfosPost key={post.id} username={post.username}
                 image={post.image} url={post.url} message={post.text} />)}
@@ -35,6 +37,8 @@ const Container = styled.div`
 width: 100%;
 display: flex;
 justify-content: center;
+align-items: center;
+flex-direction: column;
 
 `
 
