@@ -1,25 +1,40 @@
 import styled from "styled-components";
 import { BsFillTrashFill } from "react-icons/bs";
-import { FaPencilAlt } from "react-icons/fa";;
-export default function InfosPost({username, image, message, url}){
+import { FaPencilAlt } from "react-icons/fa";import { useEffect, useState } from "react";
+;
+export default function InfosPost({ username, image, message, url }) {
 
-    console.log(username, image, message, url);
+    /* console.log(username, image, message, url); */
+    const [site, setSite] = useState('')
 
-   return(
-    <>
-    <PostBox>
-        <UserPhoto><img src={image}></img></UserPhoto>
-        <PostContent>
-            <PostHeader>
-                <h1>{username}</h1> <Interactions> <FaPencilAlt/> <BsFillTrashFill/> </Interactions>
-            </PostHeader>
-            <Message>{message}</Message>
+    /* useEffect(() => {
 
-        </PostContent>
+    const urlMetadata = require('url-metadata')
+    urlMetadata(url).then(
+        function (metadata) { // success handler
+            console.log(metadata)
+        },
+        function (error) { // failure handler
+            console.log(error)
+        })
+    }, []); */
 
-    </PostBox>
-    </>
-   )
+
+    return (
+        <>
+            <PostBox>
+                <UserPhoto><img src={image}></img></UserPhoto>
+                <PostContent>
+                    <PostHeader>
+                        <h1>{username}</h1> <Interactions> <FaPencilAlt /> <BsFillTrashFill /> </Interactions>
+                    </PostHeader>
+                    <Message>{message}</Message>
+
+                </PostContent>
+
+            </PostBox>
+        </>
+    )
 
 }
 
