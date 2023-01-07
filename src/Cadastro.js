@@ -15,7 +15,7 @@ export default function Cadastro() {
 
     function cadastrar(event){
         event.preventDefault();
-        const requisicao = axios.post("http://localhost:4000/signup",{
+        const requisicao = axios.post("http://localhost:5000/signup",{
             email,
             password,
             username,
