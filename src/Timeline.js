@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
+import TableTrending from "./components/TableTrending";
 
 export default function Timeline() {
 
@@ -23,22 +24,37 @@ export default function Timeline() {
 
     return (
         <Container>
-        <CreatePost/>
-        <Posts>
-            {posts.map((post) => <InfosPost key={post.id} username={post.username}
-                image={post.image} url={post.url} message={post.text} />)}
-        </Posts>
+            
+            <Box1>
+                <CreatePost/>
+                <Posts>
+                    {posts.map((post) => <InfosPost key={post.id} username={post.username}
+                        image={post.image} url={post.url} message={post.text} />)}
+                </Posts>
+            </Box1>
+            <Box2>
+                <TableTrending/>
+            </Box2>
+            
         </Container>
     )
 
 }
 
+const Box2 =styled.div`
+    margin-left: 25px;
+`
+
+const Box1 = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
 const Container = styled.div`
 width: 100%;
 display: flex;
 justify-content: center;
-align-items: center;
-flex-direction: column;
+
 
 `
 

@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { useState, useContext } from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 import { LoginContext } from "./auth";
 
 
 export default function Login(){
+
+    const navigate = useNavigate();
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,6 +26,7 @@ export default function Login(){
         
         requisicao.then(response => {
             setToken(response.data);
+            navigate('/timeline');
             console.log(response.data);
 
             
