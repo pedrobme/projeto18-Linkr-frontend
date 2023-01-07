@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Cadastro from "./Cadastro";
 import Login from "./Login";
 import { AuthProvider } from "./auth";
+import Timeline from './Timeline';
 import CreatePost from "./components/createPost";
+
 
 export default function App() {
   return (
@@ -12,7 +14,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Cadastro />} />
-          <Route path="/test" element={<CreatePost />} />
+          <Route path="/timeline" element={<Timeline />}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
