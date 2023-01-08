@@ -66,7 +66,6 @@ const PostBox = styled.form`
   border-radius: 16px;
   background-color: #171717;
   margin-bottom: 16px;
-
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -77,7 +76,6 @@ const UserPhoto = styled.div`
     height: 50px;
     width: 50px;
     border-radius: 26.5px;
-
     margin-left: 18px;
     margin-top: 17px;
   }
@@ -88,16 +86,13 @@ const LikePost = styled.div`
   margin-top: 19px;
   margin-left: 33px;
   margin-bottom: 4.01px;
-
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-
   font-family: "Lato", sans-serif;
   font-size: 11px;
   font-weight: 400;
   line-height: 13px;
-
   a {
     margin-top: 9px;
     margin-left: -4px;
@@ -119,7 +114,6 @@ const PostHeader = styled.div`
   font-weight: 400;
   line-height: 23px;
   text-align: left;
-
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -137,7 +131,6 @@ const Message = styled.div`
   width: 611px;
   margin-top: 8px;
   margin-left: 5px;
-
   border-radius: 16px;
   font-family: "Lato", sans-serif;
   font-size: 17px;
@@ -151,12 +144,9 @@ const UrlMetadata = styled.div`
   width: 503px;
   margin-left: 5px;
   border-radius: 11px;
-
   border: 1px solid #ffffff;
-
   display: flex;
   flex-wrap: wrap;
-
   cursor: pointer;
 `;
 const TextInfosUrl = styled.div`
@@ -193,20 +183,16 @@ const UrlLink = styled.div`
   line-height: 13px;
   letter-spacing: 0em;
   text-align: left;
-
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `;
 const ImageUrl = styled.div`
   margin-left: 78px;
-
   img {
     height: 153px;
     width: 153.44039916992188px;
-
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
 `;
-

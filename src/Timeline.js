@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
+import TableTrending from "./components/TableTrending";
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -32,6 +33,7 @@ export default function Timeline() {
 
   return (
     <Container>
+      <Box1>
       <CreatePost />
       <LoadingPost load={load}>
         <a>Loading...</a>
@@ -53,17 +55,30 @@ export default function Timeline() {
           />
         ))}
       </Posts>
+      </Box1>
+      <Box2>
+        <TableTrending/>
+      </Box2>
     </Container>
   );
 }
 
+const Box2 =styled.div`
+    margin-left: 25px;
+`
+
+const Box1 = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
 const Container = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
+width: 100%;
+display: flex;
+justify-content: center;
+
+
+`
 
 const Posts = styled.div`
   width: 611px;
