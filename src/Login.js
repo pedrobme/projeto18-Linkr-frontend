@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { LoginContext } from "./auth";
@@ -10,6 +10,21 @@ export default function Login() {
   // const {setToken} = useContext(LoginContext);
 
   const navigate = useNavigate();
+
+
+  const buttRef = useRef();
+
+    const onButtClick = () => {
+      console.log("clicked");
+      buttRef.current.disabled = true;
+      buttRef.current.color = "#FFFFFF";
+      const wait = async () => {
+        buttRef.current.disabled = false;
+      };
+  
+      wait();
+  };
+
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
@@ -67,7 +82,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></input>
-            <button type="submit">Log In</button>
+            <button type="submit" ref={buttRef} onClick={onButtClick}>Log In</button>
             <Link to="/signup">
               <Logar>First time? Create an account!</Logar>
             </Link>
