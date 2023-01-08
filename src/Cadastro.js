@@ -11,16 +11,7 @@ export default function Cadastro() {
 
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  function cadastrar(event) {
-    event.preventDefault();
-    const requisicao = axios.post("http://localhost:5000/signup", {
-      email,
-      password,
-      username,
-      image,
-    });
-=======
+
     function cadastrar(event){
         event.preventDefault();
         const requisicao = axios.post("http://localhost:5000/signup",{
@@ -29,9 +20,6 @@ export default function Cadastro() {
             username,
             image
         })
-        
-        requisicao.then(response => {
->>>>>>> 58068762981f8c0762ed4d1b9cc52ff2b3e24698
 
     requisicao.then((response) => {
       navigate("/");
