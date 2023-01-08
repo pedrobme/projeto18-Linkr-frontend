@@ -6,7 +6,7 @@ import { LoginContext } from "../auth";
 const CreatePost = () => {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
-  const { token } = useContext(LoginContext);
+  const authToken = localStorage.getItem("authToken");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,6 +16,8 @@ const CreatePost = () => {
       url: link,
     };
 
+    console.log(authToken);
+
     console.log(publishPostObject);
 
     try {
@@ -23,9 +25,11 @@ const CreatePost = () => {
         "http://localhost:5000/publish",
         publishPostObject,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${authToken}` },
         }
       );
+
+      window.location.reload(false);
 
       console.log(response);
     } catch (err) {
