@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
+import axios from "axios";
 
 export default function InfosPost({
+  postId,
   setHashtagReload,
   postNotifications,
   username,
@@ -24,6 +26,8 @@ export default function InfosPost({
     cursor: 'pointer',
     
   };
+
+  const [likes, setLikes] = useState([])
 
   const navigate = useNavigate();
 
@@ -44,16 +48,57 @@ export default function InfosPost({
     window.open(url, "_blank");
   }
 
+  const authToken = localStorage.getItem("authToken");
+
+  useEffect(() => {
+    const promisse = axios.get(`http://localhost:5000/postlikes/${postId}`,
+    {
+      headers: { Authorization: `Bearer ${authToken}` },
+    }
+    );
+
+    promisse.then((res) => {
+      console.log(res.data)
+      setLikes(res.data.data)
+    });
+    promisse.catch(() =>
+      alert(
+        "An error occured while trying to fetch the posts, please refresh the page"
+      )
+    );
+  }, []);
+
+  function liked (){
+
+    const object = {
+      postId: postId
+    }
+    const promisse = axios.post("http://localhost:5000/liked", object,
+    {
+      headers: { Authorization: `Bearer ${authToken}` },
+    }
+      )
+
+    promisse.then((res) => {
+      console.log(res)
+    });
+    promisse.catch(() =>
+      alert(
+        "An error occured while trying to fetch the posts, please refresh the page"
+      )
+    );
+  }
+
   return (
     <>
       <PostBox username={username}>
         <UserPhoto>
           <img src={image}></img>
         </UserPhoto>
-        <LikePost>
+        <LikePost onClick={()=> liked() }>
           <AiOutlineHeart size={25} />
 
-          <a>13 likes</a>
+          <a>{likes.length} likes</a>
         </LikePost>
 
         <PostContent>

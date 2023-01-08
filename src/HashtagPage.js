@@ -49,6 +49,7 @@ export default function HashtagPage() {
                     </Notification>
                     {posts.map((post) => (
                     <InfosPost
+                        postId={post.id}
                         setHashtagReload={setHashtagReload}
                         key={post.id}
                         username={post.username}
