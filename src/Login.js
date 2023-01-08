@@ -16,6 +16,19 @@ export default function Login() {
       navigate("/timeline");
     }
   }, []);
+  
+  const buttRef = useRef();
+
+    const onButtClick = () => {
+      console.log("clicked");
+      buttRef.current.disabled = true;
+      buttRef.current.color = "#FFFFFF";
+      const wait = async () => {
+        buttRef.current.disabled = false;
+      };
+  
+      wait();
+  };
 
   function logar(event) {
     event.preventDefault();
@@ -24,6 +37,7 @@ export default function Login() {
       email,
       password,
     });
+
 
     requisicao.then((response) => {
       // setToken(response.data);
@@ -63,7 +77,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></input>
-            <button type="submit">Log In</button>
+            <button type="submit" ref={buttRef} onClick={onButtClick}>Log In</button>
             <Link to="/signup">
               <Logar>First time? Create an account!</Logar>
             </Link>
