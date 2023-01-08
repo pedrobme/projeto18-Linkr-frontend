@@ -57,15 +57,6 @@ const CreatePost = () => {
 
 // Styled components
 
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: #e5e5e5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const CreatePostBackground = styled.div`
   width: 611px;
   height: 209px;
