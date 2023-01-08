@@ -1,8 +1,9 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function TableTrending () {
+export default function TableTrending ({hashtagReload, setHashtagReload}) {
 
     const [hashtags, setHashtags] = useState([])
 
@@ -18,7 +19,9 @@ export default function TableTrending () {
         });
         promisse.catch(() => console.log('Falha na requisição, tente novamente'));
         
-    },[])
+    },[hashtagReload])
+
+    
 
     return(
         <Affs>
@@ -26,7 +29,7 @@ export default function TableTrending () {
                 trending
             </h1>
             <div className="line"></div>
-            <div className="hashtags">{hashtags.map((m, key)=><div key={key}># {m.Hashtag}</div>)}</div>
+            <div className="hashtags">{hashtags.map((m, key)=><div key={key} onClick={()=> setHashtagReload(m.Hashtag)}><Link to={`/hashtag/${m.Hashtag}`}># {m.Hashtag}</Link></div>)}</div>
         </Affs>
    )
 }
@@ -38,6 +41,14 @@ const Affs = styled.div`
     border-radius: 16px;
     padding-left: 16px;
     padding-top: 10px;
+
+    a{
+            text-decoration: none;
+    }
+
+    a:visited {
+        color: #FFFFFF;
+    }
 
     h1{
         font-family: 'Oswald';
@@ -63,6 +74,8 @@ const Affs = styled.div`
         font-size: 19px;
         line-height: 23px;
         letter-spacing: 0.05em;
+
+       
 
         color: #FFFFFF;
         margin-top: 18px;

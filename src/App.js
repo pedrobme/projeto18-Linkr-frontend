@@ -5,6 +5,7 @@ import Login from "./Login";
 import { AuthProvider } from "./auth";
 import Timeline from './Timeline';
 import CreatePost from "./components/createPost";
+import HashtagPage from "./HashtagPage";
 
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Cadastro />} />
           <Route path="/timeline" element={<Timeline />}/>
+          <Route path="/hashtag/:hashtag" element={<HashtagPage/>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
