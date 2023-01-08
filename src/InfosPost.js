@@ -209,3 +209,4 @@ const ImageUrl = styled.div`
     border-bottom-right-radius: 10px;
   }
 `;
+
