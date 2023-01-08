@@ -34,6 +34,11 @@ export default function Login() {
     });
     requisicao.catch((error) => {
       console.log(error);
+      if(error.response.status === 422){
+        alert("Favor, preencha todos os campos");
+        } else if(error.response.status === 401){
+        alert("Email ou senha incorretos");
+        }
     });
   }
 
