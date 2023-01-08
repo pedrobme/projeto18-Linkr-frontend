@@ -11,15 +11,14 @@ export default function Cadastro() {
 
   const navigate = useNavigate();
 
-
-    function cadastrar(event){
-        event.preventDefault();
-        const requisicao = axios.post("http://localhost:5000/signup",{
-            email,
-            password,
-            username,
-            image
-        })
+  function cadastrar(event) {
+    event.preventDefault();
+    const requisicao = axios.post("http://localhost:5000/signup", {
+      email,
+      password,
+      username,
+      image,
+    });
 
     requisicao.then((response) => {
       navigate("/");
@@ -150,7 +149,6 @@ const Signup = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   input:nth-child(1) {
     width: 429px;
     height: 65px;
@@ -195,7 +193,6 @@ const Signup = styled.form`
     flex-direction: column;
     margin-top: 40px;
     margin-left: 400px;
-
     text-align: center;
     input {
       width: 375px;
