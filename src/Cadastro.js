@@ -17,7 +17,6 @@ export default function Cadastro() {
     const onButtClick = () => {
       console.log("clicked");
       buttRef.current.disabled = true;
-      buttRef.current.color = "#FFFFFF";
       const wait = async () => {
         buttRef.current.disabled = false;
       };
