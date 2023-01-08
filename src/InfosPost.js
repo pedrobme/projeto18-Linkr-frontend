@@ -3,9 +3,11 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ReactTagify } from "react-tagify";
 
 export default function InfosPost({
+  setHashtagReload,
   postNotifications,
   username,
   image,
@@ -16,6 +18,26 @@ export default function InfosPost({
   descriptionUrl,
 }) {
   /* console.log(username, image, message, url, titleUrl, imageUrl, descriptionUrl); */
+
+  const tagStyle = {
+    fontWeight: 900,
+    cursor: 'pointer',
+    
+  };
+
+  const navigate = useNavigate();
+
+  function redirectHash (m) {
+    let newTag = ''
+
+    for(let i = 1; i < m.length; i++){
+      newTag = newTag + m[i]
+    }
+    
+    navigate(`/hashtag/${newTag}`)
+    setHashtagReload(newTag)
+  }
+
   const [site, setSite] = useState("");
 
   function redirection() {
@@ -42,7 +64,10 @@ export default function InfosPost({
               <FaPencilAlt /> <BsFillTrashFill />{" "}
             </Interactions>
           </PostHeader>
+          <ReactTagify tagStyle={tagStyle} tagClicked={(tag) => redirectHash(tag)}>
           <Message>{message}</Message>
+
+          </ReactTagify>
           <UrlMetadata onClick={redirection}>
             <TextInfosUrl>
               <TitleUrl>{titleUrl}</TitleUrl>
