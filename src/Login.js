@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useState, useContext } from "react";
-import { Link} from "react-router-dom";
+import { useState, useContext, useRef } from "react";
+import { Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 import { LoginContext } from "./auth";
 
@@ -11,7 +11,20 @@ export default function Login(){
     const [password, setPassword] = useState("");
     const {setToken} = useContext(LoginContext)
 
+    const buttRef = useRef();
 
+    const navigate = useNavigate();
+
+
+    const onButtClick = () => {
+      console.log("clicked");
+      buttRef.current.disabled = true;
+      const wait = async () => {
+        buttRef.current.disabled = false;
+      };
+  
+      wait();
+    };
 
 
     function logar(event){
@@ -25,13 +38,21 @@ export default function Login(){
         requisicao.then(response => {
             setToken(response.data);
             console.log(response.data);
+            localStorage.setItem("token", response.data);
+            navigate('/timeline');
 
             
 
         })
         requisicao.catch(error => {
             console.log(error);
+            if(error.response.status === 422){
+                alert("Favor, preencha todos os campos");
+            } else if(error.response.status === 401){
+                alert("Email ou senha incorretos");
+            }
         })
+        
     }
 
 
@@ -47,7 +68,7 @@ export default function Login(){
                 <Signup onSubmit={logar}>
                     <input type="text" placeholder="e-mail" value={email} onChange={e => setEmail(e.target.value)}></input>
                     <input type="password" placeholder="password" value={password} onChange={e => setPassword(e.target.value)}></input>
-                    <button type="submit">Log In</button>
+                    <button type="submit" ref={buttRef} onClick={onButtClick}>Log In</button>
                     <Link to="/signup">
                         <Logar>First time? Create an account!</Logar>
                     </Link>

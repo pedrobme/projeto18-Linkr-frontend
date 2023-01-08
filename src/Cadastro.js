@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 
@@ -10,6 +10,24 @@ export default function Cadastro() {
     const [image, setImage] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+
+    const buttRef = useRef();
+
+    const onButtClick = () => {
+      console.log("clicked");
+      buttRef.current.disabled = true;
+      buttRef.current.color = "#FFFFFF";
+      const wait = async () => {
+        buttRef.current.disabled = false;
+      };
+  
+      wait();
+    };
+
+
+
+    
 
     const navigate = useNavigate();
 
@@ -22,6 +40,13 @@ export default function Cadastro() {
             image
         })
         
+    
+
+
+        if(username === "" || image === "" || email === "" || password === ""){
+            alert("Favor, preencha todos os campos");
+        }
+        
         requisicao.then(response => {
 
             navigate('/');
@@ -29,6 +54,9 @@ export default function Cadastro() {
         })
         requisicao.catch(err => {
             console.log(err);
+            if(err.response.status === 409){
+                alert("Email já cadastrado");
+            }
         })
     }
 
@@ -42,12 +70,12 @@ export default function Cadastro() {
                 <div>save, share and discover the best links on the web</div>
             </Linkr>
             <Form>
-                <Signup onSubmit={cadastrar}>
+                <Signup onSubmit={cadastrar} id="form">
                     <input type="text" placeholder="e-mail" value={email} onChange={e => setEmail(e.target.value)}></input>
                     <input type="password" placeholder="password" value={password} onChange={e => setPassword(e.target.value)}></input>
                     <input type="text" placeholder="username" value={username} onChange={e => setUsername(e.target.value)}></input>
                     <input type="text" placeholder="picture url" value={image} onChange={e => setImage(e.target.value)}></input>
-                    <button type="submit">Cadastrar</button>
+                    <button type="submit" ref={buttRef} onClick={onButtClick}>Cadastrar</button>
                     <Link to="/">
                         <Logar>Switch back to log in</Logar>
                     </Link>
@@ -211,6 +239,7 @@ const Logar = styled.p`
     text-decoration-line: underline;
     
 `
+
 
 
 
