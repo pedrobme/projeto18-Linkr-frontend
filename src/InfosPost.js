@@ -304,18 +304,18 @@ const Message = styled.div`
 `;
 
 const UrlMetadata = styled.div`
-  height: 155px;
-  width: 503px;
-  margin-left: 5px;
-  margin-block: 10px;
-  border-radius: 11px;
-  border: 1px solid #ffffff;
-  display: flex;
-  flex-wrap: wrap;
-  cursor: pointer;
+height: 155px;
+width: 503px;
+margin-left: 5px;
+border-radius: 11px;
 
-  
-`;
+border: 1px solid #FFFFFF;
+
+display: flex;
+flex-wrap: wrap;
+
+cursor: pointer;
+`
 const TextInfosUrl = styled.div`
   width: 249.98px;
   height: 108px;
@@ -362,7 +362,8 @@ const ImageUrl = styled.div`
     height: 153px;
     width: 153.44039916992188px;
 
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-`;
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;
+}
+
+`
