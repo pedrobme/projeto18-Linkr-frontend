@@ -6,8 +6,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
-import { AiOutlineHeart } from "react-icons/ai";
-import { Link } from "react-router-dom";
+
 
 export default function InfosPost({
   postId,
