@@ -28,7 +28,7 @@ export default function InfosPost({
   };
 
   const [likes, setLikes] = useState([])
-
+  const [userId, setUserId] = useState(undefined)
   const navigate = useNavigate();
 
   function redirectHash (m) {
@@ -48,6 +48,7 @@ export default function InfosPost({
     window.open(url, "_blank");
   }
 
+
   const [likeUser, setLikeUser] = useState(undefined);
 
   const authToken = localStorage.getItem("authToken");
@@ -62,6 +63,7 @@ export default function InfosPost({
     promisse.then((res) => {
       console.log(res.data)
       setLikes(res.data.data)
+      setUserId(res.data.userId)
       for(let user of res.data.data){
         if( Object.values(user)[0] == res.data.userId){
           setLikeUser(true)
@@ -123,6 +125,36 @@ export default function InfosPost({
       );
   }
 
+  function personLiked () {
+      if(likeUser && (likes.length == 2)){
+        let name
+        for(let i = 0; i < likes.length ; i++){
+            if(Object.values(likes[i])[0] !== userId){
+              name = likes[i].name
+              return `Você e ${name} curtiram`  
+            }
+        }
+        
+      }else if(likes.length == 0){
+        return "Ninguém curtiu"
+      }else if(likes.length == 1 && !likeUser){
+        return `${likes[0].name} curtiu`
+      }else if(!likeUser && likes.length == 2){
+        return `${likes[0].name} e ${likes[1].name} curtiram`
+      }else if(!likeUser && likes.length > 2){
+        return `${likes[0].name}, ${likes[1].name} e outras ${likes.length -2} pessoas`
+      }else if(likeUser && likes.length > 2){
+        let name
+        for(let i = 0; i < likes.length ; i++){
+            if(Object.values(likes[i])[0] !== userId){
+              name = likes[i].name
+              return `Você, ${name} e outras ${likes.length-2} pessoas`  
+            }
+        }
+      }else if(likeUser){
+        return "Você curtiu"
+      }
+  }
     
 
   return (
@@ -135,6 +167,9 @@ export default function InfosPost({
           {likeUser? <AiFillHeart size={25} color="red"/> : <AiOutlineHeart size={25}/>}
 
           <a>{likes.length} likes</a>
+          <div className="hover">
+            {personLiked()}
+          </div>
         </LikePost>
 
         <PostContent>
@@ -187,6 +222,33 @@ const UserPhoto = styled.div`
   }
 `;
 const LikePost = styled.div`
+
+  .hover{
+    display: none;
+  }
+
+  :hover {
+    .hover {
+      display: flex;
+      position: absolute;
+      width: 169px;
+      height: 24px;
+      margin-top: 55px;
+      margin-left: -72px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 3px;
+      color: #505050;
+
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 11px;
+      line-height: 13px;
+      align-items: center;
+      justify-content: center;
+
+    }
+  }
   width: 50px;
   height: 80px;
   margin-top: 19px;
