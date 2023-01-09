@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
 
-
 export default function InfosPost({
   postId,
   setHashtagReload,
@@ -57,15 +56,15 @@ export default function InfosPost({
 
     promisse.then((res) => {
       console.log(res.data);
-      // setLikes(res.data.data);
-      // setUserId(res.data.userId);
+      setLikes(res.data.data);
+      setUserId(res.data.userId);
 
-      // for (let user of res.data.data) {
-      //   if (Object.values(user)[0] == res.data.userId) {
-      //     setLikeUser(true);
-      //     console.log(Object.values(user)[1]);
-      //   }
-      // }
+      for (let user of res.data.data) {
+        if (Object.values(user)[0] == res.data.userId) {
+          setLikeUser(true);
+          console.log(Object.values(user)[1]);
+        }
+      }
     });
     promisse.catch((err) => {
       console.log(err);
@@ -164,7 +163,6 @@ export default function InfosPost({
           </LikePost>
         </LeftPannel>
 
-
         <PostContent>
           <PostHeader>
             <h1>{username}</h1>{" "}
@@ -221,7 +219,6 @@ const UserPhoto = styled.div`
   }
 `;
 const LikePost = styled.div`
-
   .hover {
     display: none;
   }
@@ -310,7 +307,6 @@ const Interactions = styled.div`
 `;
 
 const Message = styled.div`
-
   width: 500px;
 
   margin-top: 8px;
@@ -382,7 +378,6 @@ const UrlLink = styled.div`
   white-space: nowrap;
 `;
 const ImageUrl = styled.div`
-
   width: 30%;
   img {
     width: 100%;
@@ -390,5 +385,4 @@ const ImageUrl = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
-`
-
+`;
