@@ -62,7 +62,10 @@ const CreatePost = () => {
 // Styled components
 
 const CreatePostBackground = styled.div`
-  height: 220px;
+  margin-top: 50px;
+  width: 611px;
+  height: 209px;
+
   background-color: white;
   border-radius: 16px;
 

@@ -21,9 +21,9 @@ export default function Cadastro() {
     wait();
   };
 
+
   const navigate = useNavigate();
-
-
+  
   function cadastrar(event) {
     event.preventDefault();
     const requisicao = axios.post("http://localhost:5000/signup", {
@@ -32,7 +32,6 @@ export default function Cadastro() {
       username,
       image,
     });
-
 
     if (username === "" || image === "" || email === "" || password === "") {
       alert("Favor, preencha todos os campos");
