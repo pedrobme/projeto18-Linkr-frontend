@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useContext } from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 import { LoginContext } from "./auth";
 
@@ -10,23 +10,24 @@ export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {setToken} = useContext(LoginContext);
+    const navigate = useNavigate();
 
 
 
 
     function logar(event){
         event.preventDefault();
-        const requisicao = axios.post("http://localhost:5000/signin",{
+        const requisicao = axios.post("http://localhost:5001/signin",{
             email,
             password,
            
         })
         
+        
         requisicao.then(response => {
             setToken(response.data);
             console.log(response.data);
-
-            
+            navigate('/timeline')
 
         })
         requisicao.catch(error => {

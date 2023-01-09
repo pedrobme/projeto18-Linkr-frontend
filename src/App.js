@@ -8,6 +8,7 @@ import CreatePost from "./components/createPost";
 
 
 export default function App() {
+  console.log('to aqui')
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -20,3 +21,4 @@ export default function App() {
     </AuthProvider>
   );
 }
+
