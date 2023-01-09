@@ -6,6 +6,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
+import deletePost from "./utils/deletePost";
 
 export default function InfosPost({
   postId,
@@ -26,6 +27,9 @@ export default function InfosPost({
 
   const [likes, setLikes] = useState([]);
   const [userId, setUserId] = useState(undefined);
+  const [editingPost, setEditingPost] = useState(false);
+
+  const [editingPostText, setEditingPostText] = useState("");
   const navigate = useNavigate();
 
   function redirectHash(m) {
@@ -144,6 +148,10 @@ export default function InfosPost({
     }
   }
 
+  function editPost(event, postId, setEditingPost) {
+    event.preventDeafault();
+  }
+
   return (
     <>
       <PostBox username={username}>
@@ -168,15 +176,37 @@ export default function InfosPost({
             <h1>{username}</h1>{" "}
             <Interactions>
               {" "}
-              <FaPencilAlt /> <BsFillTrashFill />{" "}
+              <FaPencilAlt
+                onClick={() => {
+                  editingPost
+                    ? alert("you must end your current editing post first")
+                    : setEditingPost(true);
+                }}
+              />{" "}
+              <BsFillTrashFill
+                onClick={() => {
+                  deletePost(postId);
+                }}
+              />{" "}
             </Interactions>
           </PostHeader>
-          <ReactTagify
-            tagStyle={tagStyle}
-            tagClicked={(tag) => redirectHash(tag)}
-          >
-            <Message>{message}</Message>
-          </ReactTagify>
+          {editingPost ? (
+            <EditingPostForm onSubmit={(event) => editPost(event)}>
+              <input
+                onChange={(event) => setEditingPostText(event.target.value)}
+                placeholder="Type details about your post (optional)"
+              ></input>
+              <ButtonPhantom></ButtonPhantom>
+              <button type="submit">Salvar</button>
+            </EditingPostForm>
+          ) : (
+            <ReactTagify
+              tagStyle={tagStyle}
+              tagClicked={(tag) => redirectHash(tag)}
+            >
+              <Message>{message}</Message>
+            </ReactTagify>
+          )}
           <UrlMetadata onClick={redirection}>
             <TextInfosUrl>
               <TitleUrl>{titleUrl}</TitleUrl>
@@ -297,6 +327,67 @@ const PostHeader = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+`;
+
+const EditingPostForm = styled.form`
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: relative;
+
+  h3 {
+    font-size: 20px;
+    color: #707070;
+
+    line-height: 24px;
+
+    margin-block: 8px;
+  }
+
+  input {
+    font-size: 15px;
+    height: 30px;
+
+    background: #efefef;
+    border-radius: 5px;
+    border: none;
+
+    ::placeholder {
+      font-size: 15px;
+      font-weight: 300;
+    }
+
+    :nth-child(3) {
+      height: 66px;
+    }
+  }
+
+  button {
+    width: 112px;
+    height: 31px;
+
+    background-color: #1877f2;
+
+    border-radius: 5px;
+
+    color: #ffffff;
+
+    border: none;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    cursor: pointer;
+  }
+`;
+
+const ButtonPhantom = styled.div`
+  height: 31px;
+  background-color: #ffffff;
 `;
 
 const Interactions = styled.div`
