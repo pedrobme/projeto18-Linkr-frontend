@@ -25,11 +25,12 @@ export default function Timeline() {
         setPostNotifications(false);
       }
     });
-    promisse.catch(() =>
+    promisse.catch((err) => {
+      console.log(err);
       alert(
         "An error occured while trying to fetch the posts, please refresh the page"
-      )
-    );
+      );
+    });
   }, [postNotifications]);
 
   return (
@@ -49,6 +50,7 @@ export default function Timeline() {
             {posts.map((post) => (
               <InfosPost
                 key={post.id}
+                postId={post.id}
                 username={post.username}
                 image={post.image}
                 url={post.url}

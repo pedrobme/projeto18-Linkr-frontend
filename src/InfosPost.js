@@ -58,20 +58,22 @@ export default function InfosPost({
 
     promisse.then((res) => {
       console.log(res.data);
-      setLikes(res.data.data);
-      setUserId(res.data.userId);
-      for (let user of res.data.data) {
-        if (Object.values(user)[0] == res.data.userId) {
-          setLikeUser(true);
-          console.log(Object.values(user)[1]);
-        }
-      }
+      // setLikes(res.data.data);
+      // setUserId(res.data.userId);
+
+      // for (let user of res.data.data) {
+      //   if (Object.values(user)[0] == res.data.userId) {
+      //     setLikeUser(true);
+      //     console.log(Object.values(user)[1]);
+      //   }
+      // }
     });
-    promisse.catch(() =>
+    promisse.catch((err) => {
+      console.log(err);
       alert(
         "An error occured while trying to fetch the posts, please refresh the page"
-      )
-    );
+      );
+    });
   }, [likeUser]);
 
   function liked() {
@@ -88,11 +90,12 @@ export default function InfosPost({
         console.log(res);
         setLikeUser(true);
       });
-      promisse.catch(() =>
+      promisse.catch((err) => {
+        console.log(err);
         alert(
           "An error occured while trying to fetch the posts, please refresh the page"
-        )
-      );
+        );
+      });
       return;
     }
 
