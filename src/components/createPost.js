@@ -1,17 +1,48 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { LoginContext } from "../auth";
 
 const CreatePost = () => {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
+  const authToken = localStorage.getItem("authToken");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const publishPostObject = {
+      text: text,
+      url: link,
+    };
+
+    console.log(authToken);
+
+    console.log(publishPostObject);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/publish",
+        publishPostObject,
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      );
+
+      window.location.reload(false);
+
+      console.log(response);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
-
     <CreatePostBackground>
       <LeftPannel>
         <img src="https://post.healthline.com/wp-content/uploads/2020/08/3180-Pug_green_grass-732x549-thumbnail-732x549.jpg" />
       </LeftPannel>
-      <MainContentContainer>
+      <MainContentForm onSubmit={handleSubmit}>
         <h3>What are you going o share today?</h3>
         <input
           onChange={(event) => setLink(event.target.value)}
@@ -22,10 +53,9 @@ const CreatePost = () => {
           placeholder="Type details about your post (optional)"
         ></input>
         <ButtonPhantom></ButtonPhantom>
-        <button>Publicar</button>
-      </MainContentContainer>
+        <button type="submit">Publicar</button>
+      </MainContentForm>
     </CreatePostBackground>
-
   );
 };
 
@@ -35,17 +65,18 @@ const CreatePostBackground = styled.div`
   margin-top: 50px;
   width: 611px;
   height: 209px;
+
   background-color: white;
   border-radius: 16px;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 
   padding-inline: 18px;
   padding-block: 16px;
 `;
 
-const MainContentContainer = styled.div`
+const MainContentForm = styled.form`
   width: 500px;
 
   display: flex;
