@@ -197,7 +197,7 @@ const PostBox = styled.form`
   color: #ffffff;
 
   min-height: 276px;
-  width: 611px;
+  width: 100%;
 
   border-radius: 16px;
   background-color: #171717;
@@ -307,7 +307,7 @@ const Interactions = styled.div`
 `;
 
 const Message = styled.div`
-  width: 500px;
+  width: 100%;
 
   margin-top: 8px;
   margin-left: 5px;
@@ -319,8 +319,7 @@ const Message = styled.div`
   line-height: 20px;
   text-align: left;
 
-  word-wrap: break-word;
-  text-overflow: hidden;
+  word-break: break-all;
 `;
 
 const UrlMetadata = styled.div`
