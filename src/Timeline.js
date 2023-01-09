@@ -44,6 +44,7 @@ export default function Timeline() {
         </Notification>
         {posts.map((post) => (
           <InfosPost
+            postId={post.id}
             key={post.id}
             username={post.username}
             image={post.image}
