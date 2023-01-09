@@ -6,6 +6,8 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
+import { AiOutlineHeart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 export default function InfosPost({
   postId,
@@ -19,22 +21,20 @@ export default function InfosPost({
   imageUrl,
   descriptionUrl,
 }) {
-  /* console.log(username, image, message, url, titleUrl, imageUrl, descriptionUrl); */
-
   const tagStyle = {
     fontWeight: 900,
-    cursor: 'pointer'
+    cursor: "pointer",
   };
 
-  const [likes, setLikes] = useState([])
-  const [userId, setUserId] = useState(undefined)
+  const [likes, setLikes] = useState([]);
+  const [userId, setUserId] = useState(undefined);
   const navigate = useNavigate();
 
-  function redirectHash (m) {
-    let newTag = ''
+  function redirectHash(m) {
+    let newTag = "";
 
-    for(let i = 1; i < m.length; i++){
-      newTag = newTag + m[i]
+    for (let i = 1; i < m.length; i++) {
+      newTag = newTag + m[i];
     }
     
     navigate(`/hashtag/${newTag}`)
@@ -304,18 +304,16 @@ const Message = styled.div`
 `;
 
 const UrlMetadata = styled.div`
-height: 155px;
-width: 503px;
-margin-left: 5px;
-border-radius: 11px;
-
-border: 1px solid #FFFFFF;
-
-display: flex;
-flex-wrap: wrap;
-
-cursor: pointer;
-`
+  height: 155px;
+  width: 503px;
+  margin-left: 5px;
+  margin-block: 10px;
+  border-radius: 11px;
+  border: 1px solid #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+`;
 const TextInfosUrl = styled.div`
   width: 249.98px;
   height: 108px;
@@ -365,5 +363,4 @@ const ImageUrl = styled.div`
 border-top-right-radius:10px;
 border-bottom-right-radius:10px;
 }
-
 `
