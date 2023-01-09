@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
@@ -48,6 +48,8 @@ export default function InfosPost({
     window.open(url, "_blank");
   }
 
+  const [likeUser, setLikeUser] = useState(undefined);
+
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
@@ -60,34 +62,68 @@ export default function InfosPost({
     promisse.then((res) => {
       console.log(res.data)
       setLikes(res.data.data)
+      for(let user of res.data.data){
+        if( Object.values(user)[0] == res.data.userId){
+          setLikeUser(true)
+          console.log(Object.values(user)[1])
+        }
+      }
+      
+      
     });
     promisse.catch(() =>
       alert(
         "An error occured while trying to fetch the posts, please refresh the page"
       )
     );
-  }, []);
+  }, [likeUser]);
+
+  
 
   function liked (){
 
     const object = {
       postId: postId
     }
-    const promisse = axios.post("http://localhost:5000/liked", object,
-    {
-      headers: { Authorization: `Bearer ${authToken}` },
-    }
-      )
 
-    promisse.then((res) => {
-      console.log(res)
-    });
-    promisse.catch(() =>
-      alert(
-        "An error occured while trying to fetch the posts, please refresh the page"
-      )
-    );
+    if(!likeUser){
+      
+      const promisse = axios.post("http://localhost:5000/liked", object,
+      {
+        headers: { Authorization: `Bearer ${authToken}` },
+      }
+        )
+  
+      promisse.then((res) => {
+        console.log(res)
+        setLikeUser(true)
+      });
+      promisse.catch(() =>
+        alert(
+          "An error occured while trying to fetch the posts, please refresh the page"
+        )
+      );
+      return
+    }
+
+    const promisse = axios.post("http://localhost:5000/desliked", object,
+      {
+        headers: { Authorization: `Bearer ${authToken}` },
+      }
+        )
+  
+      promisse.then((res) => {
+        console.log(res)
+        setLikeUser(false)
+      });
+      promisse.catch(() =>
+        alert(
+          "An error occured while trying to fetch the posts, please refresh the page"
+        )
+      );
   }
+
+    
 
   return (
     <>
@@ -96,7 +132,7 @@ export default function InfosPost({
           <img src={image}></img>
         </UserPhoto>
         <LikePost onClick={()=> liked() }>
-          <AiOutlineHeart size={25} />
+          {likeUser? <AiFillHeart size={25} color="red"/> : <AiOutlineHeart size={25}/>}
 
           <a>{likes.length} likes</a>
         </LikePost>
