@@ -33,42 +33,39 @@ export default function Timeline() {
   }, [postNotifications]);
 
   return (
-    <Page>
-      <TopBar></TopBar>
-      <TimelineTitle>Timeline</TimelineTitle>
-      <TimelineMainContent>
-        <Box1>
-          <CreatePost />
-          <LoadingPost load={load}>
-            <a>Loading...</a>
-          </LoadingPost>
-          <Posts>
-            <Notification postNotifications={postNotifications}>
-              <a>There are no posts yet</a>
-            </Notification>
-            {posts.map((post) => (
-              <InfosPost
-                key={post.id}
-                username={post.username}
-                image={post.image}
-                url={post.url}
-                message={post.text}
-                titleUrl={post.titleUrl}
-                imageUrl={post.imageUrl}
-                descriptionUrl={post.descriptionUrl}
-              />
-            ))}
-          </Posts>
-        </Box1>
-        <Box2>
-          <TableTrending />
-        </Box2>
-      </TimelineMainContent>
-    </Page>
+    <Container>
+      <Box1>
+        <CreatePost />
+        <LoadingPost load={load}>
+          <a>Loading...</a>
+        </LoadingPost>
+        <Posts>
+          <Notification postNotifications={postNotifications}>
+            <a>There are no posts yet</a>
+          </Notification>
+          {posts.map((post) => (
+            <InfosPost
+              postId={post.id}
+              key={post.id}
+              username={post.username}
+              image={post.image}
+              url={post.url}
+              message={post.text}
+              titleUrl={post.titleUrl}
+              imageUrl={post.imageUrl}
+              descriptionUrl={post.descriptionUrl}
+            />
+          ))}
+        </Posts>
+      </Box1>
+      <Box2>
+        <TableTrending />
+      </Box2>
+    </Container>
   );
 }
 
-const Page = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
 
