@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import InfosPost from "./InfosPost";
 import TableTrending from "./components/TableTrending";
+import TopBar from "./components/TopBar";
 
 export default function HashtagPage() {
   let { hashtag } = useParams();
@@ -35,8 +36,13 @@ export default function HashtagPage() {
   }, [hashtagReload]);
 
   return (
+    <>
+    
     <Container>
-      <Box1>
+    <TopBar></TopBar>
+    <TimelineTitle>#{hashtag}</TimelineTitle>
+    <TimelineMainContent>
+    <Box1>
         <LoadingPost load={load}>
           <a>Loading...</a>
         </LoadingPost>
@@ -55,38 +61,60 @@ export default function HashtagPage() {
               message={post.text}
               titleUrl={post.titleUrl}
               imageUrl={post.imageUrl}
-              descriptionUrl={post.descriptionUrl}
-            />
+              descriptionUrl={post.descriptionUrl} />
           ))}
         </Posts>
       </Box1>
       <Box2>
         <TableTrending
           hashtagReload={hashtagReload}
-          setHashtagReload={setHashtagReload}
-        />
+          setHashtagReload={setHashtagReload} />
       </Box2>
-    </Container>
+    </TimelineMainContent>
+      
+    </Container></>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+`;
+
 const Box2 = styled.div`
   margin-left: 25px;
+  margin-top: 26px;
+  width: 30vw;
 `;
 
 const Box1 = styled.div`
   display: flex;
   flex-direction: column;
+
+  width: 50vw;
 `;
 
-const Container = styled.div`
-  width: 100%;
+const TimelineMainContent = styled.div`
   display: flex;
-  justify-content: center;
+
+  width: 80vw;
+`;
+
+const TimelineTitle = styled.h3`
+  font-weight: 700;
+  font-size: 43px;
+
+  margin-top: 130px;
+  margin-bottom: 40px;
+
+  width: 80vw;
+
+  color: #ffffff;
 `;
 
 const Posts = styled.div`
-  width: 611px;
   margin-top: 29px;
   display: flex;
   flex-wrap: wrap;

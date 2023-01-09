@@ -33,6 +33,7 @@ export default function TableTrending({ hashtagReload, setHashtagReload }) {
 
 const Affs = styled.div`
   height: 406px;
+  width: 301px;
   background-color: #171717;
   border-radius: 16px;
   padding-left: 16px;
