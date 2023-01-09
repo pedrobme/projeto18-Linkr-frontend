@@ -33,7 +33,7 @@ export default function Timeline() {
   }, [postNotifications]);
 
   return (
-    <Page>
+    <Container>
       <TopBar></TopBar>
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
@@ -64,11 +64,11 @@ export default function Timeline() {
           <TableTrending />
         </Box2>
       </TimelineMainContent>
-    </Page>
+    </Container>
   );
 }
 
-const Page = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
 
