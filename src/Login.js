@@ -1,28 +1,24 @@
-
-import styled from 'styled-components';
-import { useState, useContext } from "react";
-import { Link, useNavigate} from "react-router-dom";
-import axios from 'axios';
+import styled from "styled-components";
+import { useState, useContext, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { LoginContext } from "./auth";
 
-
-export default function Login(){
-    
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const buttRef = useRef();
 
-    const onButtClick = () => {
-      console.log("clicked");
-      buttRef.current.disabled = true;
-      const wait = async () => {
-        buttRef.current.disabled = false;
-      };
-  
-      wait();
+  const onButtClick = () => {
+    console.log("clicked");
+    buttRef.current.disabled = true;
+    const wait = async () => {
+      buttRef.current.disabled = false;
+    };
+
+    wait();
   };
 
   useEffect(() => {
@@ -47,17 +43,13 @@ export default function Login(){
     });
     requisicao.catch((error) => {
       console.log(error);
-      if(error.response.status === 422){
+      if (error.response.status === 422) {
         alert("Favor, preencha todos os campos");
-        } else if(error.response.status === 401){
+      } else if (error.response.status === 401) {
         alert("Email ou senha incorretos");
-        }
-      
+      }
     });
   }
-
-
-
 
   return (
     <>
@@ -80,7 +72,9 @@ export default function Login(){
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></input>
-            <button type="submit" ref={buttRef} onClick={onButtClick}>Log In</button>
+            <button type="submit" ref={buttRef} onClick={onButtClick}>
+              Log In
+            </button>
             <Link to="/signup">
               <Logar>First time? Create an account!</Logar>
             </Link>
