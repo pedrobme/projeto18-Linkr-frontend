@@ -23,8 +23,7 @@ export default function InfosPost({
 
   const tagStyle = {
     fontWeight: 900,
-    cursor: 'pointer',
-    
+    cursor: 'pointer'
   };
 
   const [likes, setLikes] = useState([])
@@ -160,17 +159,21 @@ export default function InfosPost({
   return (
     <>
       <PostBox username={username}>
-        <UserPhoto>
-          <img src={image}></img>
-        </UserPhoto>
-        <LikePost onClick={()=> liked() }>
-          {likeUser? <AiFillHeart size={25} color="red"/> : <AiOutlineHeart size={25}/>}
+        <LeftPannel>
+          <UserPhoto>
+            <img src={image}></img>
+          </UserPhoto>
+          <LikePost onClick={() => liked()}>
+            {likeUser ? (
+              <AiFillHeart size={25} color="red" />
+            ) : (
+              <AiOutlineHeart size={25} />
+            )}
 
-          <a>{likes.length} likes</a>
-          <div className="hover">
-            {personLiked()}
-          </div>
-        </LikePost>
+            <a>{likes.length} likes</a>
+            <div className="hover">{personLiked()}</div>
+          </LikePost>
+        </LeftPannel>
 
         <PostContent>
           <PostHeader>
@@ -180,9 +183,11 @@ export default function InfosPost({
               <FaPencilAlt /> <BsFillTrashFill />{" "}
             </Interactions>
           </PostHeader>
-          <ReactTagify tagStyle={tagStyle} tagClicked={(tag) => redirectHash(tag)}>
-          <Message>{message}</Message>
-
+          <ReactTagify
+            tagStyle={tagStyle}
+            tagClicked={(tag) => redirectHash(tag)}
+          >
+            <Message>{message}</Message>
           </ReactTagify>
           <UrlMetadata onClick={redirection}>
             <TextInfosUrl>
@@ -202,68 +207,55 @@ export default function InfosPost({
 
 const PostBox = styled.form`
   color: #ffffff;
-  height: 276px;
+  min-height: 276px;
   width: 611px;
   border-radius: 16px;
   background-color: #171717;
   margin-bottom: 16px;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
 `;
+
+const LeftPannel = styled.div``;
 
 const UserPhoto = styled.div`
   img {
     height: 50px;
     width: 50px;
     border-radius: 26.5px;
+
     margin-left: 18px;
     margin-top: 17px;
   }
 `;
 const LikePost = styled.div`
-
-  .hover{
-    display: none;
-  }
-
-  :hover {
-    .hover {
-      display: flex;
-      position: absolute;
-      width: 169px;
-      height: 24px;
-      margin-top: 55px;
-      margin-left: -72px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 3px;
-      color: #505050;
-
-      font-family: 'Lato';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 11px;
-      line-height: 13px;
-      align-items: center;
-      justify-content: center;
-
-    }
-  }
   width: 50px;
   height: 80px;
   margin-top: 19px;
   margin-left: 33px;
   margin-bottom: 4.01px;
+
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  .hover {
+    display: none;
+  }
+
   font-family: "Lato", sans-serif;
   font-size: 11px;
   font-weight: 400;
   line-height: 13px;
+
   a {
     margin-top: 9px;
     margin-left: -4px;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -282,6 +274,7 @@ const PostHeader = styled.div`
   font-weight: 400;
   line-height: 23px;
   text-align: left;
+
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -295,27 +288,33 @@ const Interactions = styled.div`
 `;
 
 const Message = styled.div`
-  height: 45px;
-  width: 611px;
+  width: 500px;
   margin-top: 8px;
   margin-left: 5px;
+  margin-bottom: 8px;
   border-radius: 16px;
   font-family: "Lato", sans-serif;
   font-size: 17px;
   font-weight: 400;
   line-height: 20px;
   text-align: left;
+
+  word-wrap: break-word;
+  text-overflow: hidden;
 `;
 
 const UrlMetadata = styled.div`
   height: 155px;
   width: 503px;
   margin-left: 5px;
+  margin-block: 10px;
   border-radius: 11px;
   border: 1px solid #ffffff;
   display: flex;
   flex-wrap: wrap;
   cursor: pointer;
+
+  
 `;
 const TextInfosUrl = styled.div`
   width: 249.98px;
@@ -351,15 +350,18 @@ const UrlLink = styled.div`
   line-height: 13px;
   letter-spacing: 0em;
   text-align: left;
+
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `;
 const ImageUrl = styled.div`
   margin-left: 78px;
+
   img {
     height: 153px;
     width: 153.44039916992188px;
+
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }

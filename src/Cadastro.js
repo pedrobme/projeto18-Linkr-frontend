@@ -32,16 +32,14 @@ export default function Cadastro() {
 
     function cadastrar(event){
         event.preventDefault();
-        const requisicao = axios.post("http://localhost:4000/signup",{
+        const requisicao = axios.post("http://localhost:5000/signup",{
             email,
             password,
             username,
             image
         })
         
-    
-
-
+        
         if(username === "" || image === "" || email === "" || password === ""){
             alert("Favor, preencha todos os campos");
         }
