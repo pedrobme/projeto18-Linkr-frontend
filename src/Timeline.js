@@ -5,6 +5,7 @@ import axios from "axios";
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
+import TopBar from "./components/TopBar";
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -32,56 +33,80 @@ export default function Timeline() {
   }, [postNotifications]);
 
   return (
-    <Container>
-      <Box1>
-      <CreatePost />
-      <LoadingPost load={load}>
-        <a>Loading...</a>
-      </LoadingPost>
-      <Posts>
-        <Notification postNotifications={postNotifications}>
-          <a>There are no posts yet</a>
-        </Notification>
-        {posts.map((post) => (
-          <InfosPost
-            key={post.id}
-            username={post.username}
-            image={post.image}
-            url={post.url}
-            message={post.text}
-            titleUrl={post.titleUrl}
-            imageUrl={post.imageUrl}
-            descriptionUrl={post.descriptionUrl}
-          />
-        ))}
-      </Posts>
-      </Box1>
-      <Box2>
-        <TableTrending/>
-      </Box2>
-    </Container>
+    <Page>
+      <TopBar></TopBar>
+      <TimelineTitle>Timeline</TimelineTitle>
+      <TimelineMainContent>
+        <Box1>
+          <CreatePost />
+          <LoadingPost load={load}>
+            <a>Loading...</a>
+          </LoadingPost>
+          <Posts>
+            <Notification postNotifications={postNotifications}>
+              <a>There are no posts yet</a>
+            </Notification>
+            {posts.map((post) => (
+              <InfosPost
+                key={post.id}
+                username={post.username}
+                image={post.image}
+                url={post.url}
+                message={post.text}
+                titleUrl={post.titleUrl}
+                imageUrl={post.imageUrl}
+                descriptionUrl={post.descriptionUrl}
+              />
+            ))}
+          </Posts>
+        </Box1>
+        <Box2>
+          <TableTrending />
+        </Box2>
+      </TimelineMainContent>
+    </Page>
   );
 }
 
-const Box2 =styled.div`
-    margin-left: 25px;
-`
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+`;
+
+const Box2 = styled.div`
+  margin-left: 25px;
+
+  width: 30vw;
+`;
 
 const Box1 = styled.div`
-    display: flex;
-    flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
 
-const Container = styled.div`
-width: 100%;
-display: flex;
-justify-content: center;
+  width: 50vw;
+`;
 
+const TimelineMainContent = styled.div`
+  display: flex;
 
-`
+  width: 80vw;
+`;
+
+const TimelineTitle = styled.h3`
+  font-weight: 700;
+  font-size: 43px;
+
+  margin-top: 130px;
+  margin-bottom: 40px;
+
+  width: 80vw;
+
+  color: #ffffff;
+`;
 
 const Posts = styled.div`
-  width: 611px;
   margin-top: 29px;
   display: flex;
   flex-wrap: wrap;

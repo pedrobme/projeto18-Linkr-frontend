@@ -21,21 +21,20 @@ export default function InfosPost({
 
   const tagStyle = {
     fontWeight: 900,
-    cursor: 'pointer',
-    
+    cursor: "pointer",
   };
 
   const navigate = useNavigate();
 
-  function redirectHash (m) {
-    let newTag = ''
+  function redirectHash(m) {
+    let newTag = "";
 
-    for(let i = 1; i < m.length; i++){
-      newTag = newTag + m[i]
+    for (let i = 1; i < m.length; i++) {
+      newTag = newTag + m[i];
     }
-    
-    navigate(`/hashtag/${newTag}`)
-    setHashtagReload(newTag)
+
+    navigate(`/hashtag/${newTag}`);
+    setHashtagReload(newTag);
   }
 
   const [site, setSite] = useState("");
@@ -64,9 +63,11 @@ export default function InfosPost({
               <FaPencilAlt /> <BsFillTrashFill />{" "}
             </Interactions>
           </PostHeader>
-          <ReactTagify tagStyle={tagStyle} tagClicked={(tag) => redirectHash(tag)}>
-          <Message>{message}</Message>
-
+          <ReactTagify
+            tagStyle={tagStyle}
+            tagClicked={(tag) => redirectHash(tag)}
+          >
+            <Message>{message}</Message>
           </ReactTagify>
           <UrlMetadata onClick={redirection}>
             <TextInfosUrl>
@@ -86,8 +87,8 @@ export default function InfosPost({
 
 const PostBox = styled.form`
   color: #ffffff;
+  width: 100%;
   height: 276px;
-  width: 611px;
   border-radius: 16px;
   background-color: #171717;
   margin-bottom: 16px;
@@ -97,6 +98,7 @@ const PostBox = styled.form`
 `;
 
 const UserPhoto = styled.div`
+  width: 10%;
   img {
     height: 50px;
     width: 50px;
@@ -106,7 +108,7 @@ const UserPhoto = styled.div`
   }
 `;
 const LikePost = styled.div`
-  width: 50px;
+  width: 10%;
   height: 80px;
   margin-top: 19px;
   margin-left: 33px;
@@ -125,13 +127,15 @@ const LikePost = styled.div`
 `;
 
 const PostContent = styled.div`
+  width: 85%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   margin-top: 19px;
 `;
 
 const PostHeader = styled.div`
-  width: 502px;
+  width: 85%;
   height: 23px;
   margin-left: 5px;
   font-family: "Lato", sans-serif;
@@ -153,7 +157,7 @@ const Interactions = styled.div`
 
 const Message = styled.div`
   height: 45px;
-  width: 611px;
+
   margin-top: 8px;
   margin-left: 5px;
   border-radius: 16px;
@@ -165,20 +169,25 @@ const Message = styled.div`
 `;
 
 const UrlMetadata = styled.div`
+  width: 85%;
   height: 155px;
-  width: 503px;
   margin-left: 5px;
   border-radius: 11px;
   border: 1px solid #ffffff;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
+
+  justify-content: space-between;
   cursor: pointer;
 `;
 const TextInfosUrl = styled.div`
-  width: 249.98px;
+  width: 50%;
   height: 108px;
   margin-left: 19.31px;
   margin-top: 24px;
+
+  overflow: hidden;
 `;
 
 const TitleUrl = styled.div`
@@ -201,7 +210,6 @@ const DescriptionUrl = styled.div`
 `;
 
 const UrlLink = styled.div`
-  width: 263.19px;
   font-family: "Lato", sans-serif;
   font-size: 11px;
   font-weight: 400;
@@ -213,10 +221,10 @@ const UrlLink = styled.div`
   white-space: nowrap;
 `;
 const ImageUrl = styled.div`
-  margin-left: 78px;
+  width: 30%;
   img {
-    height: 153px;
-    width: 153.44039916992188px;
+    width: 100%;
+
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
