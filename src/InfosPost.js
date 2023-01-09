@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
 
+
 export default function InfosPost({
   postId,
   setHashtagReload,
@@ -19,8 +20,6 @@ export default function InfosPost({
   imageUrl,
   descriptionUrl,
 }) {
-  /* console.log(username, image, message, url, titleUrl, imageUrl, descriptionUrl); */
-
   const tagStyle = {
     fontWeight: 900,
     cursor: "pointer",
@@ -149,19 +148,22 @@ export default function InfosPost({
   return (
     <>
       <PostBox username={username}>
-        <UserPhoto>
-          <img src={image}></img>
-        </UserPhoto>
-        <LikePost onClick={() => liked()}>
-          {likeUser ? (
-            <AiFillHeart size={25} color="red" />
-          ) : (
-            <AiOutlineHeart size={25} />
-          )}
+        <LeftPannel>
+          <UserPhoto>
+            <img src={image}></img>
+          </UserPhoto>
+          <LikePost onClick={() => liked()}>
+            {likeUser ? (
+              <AiFillHeart size={25} color="red" />
+            ) : (
+              <AiOutlineHeart size={25} />
+            )}
 
-          <a>{likes.length} likes</a>
-          <div className="hover">{personLiked()}</div>
-        </LikePost>
+            <a>{likes.length} likes</a>
+            <div className="hover">{personLiked()}</div>
+          </LikePost>
+        </LeftPannel>
+
 
         <PostContent>
           <PostHeader>
@@ -195,15 +197,17 @@ export default function InfosPost({
 
 const PostBox = styled.form`
   color: #ffffff;
-  width: 100%;
-  height: 276px;
+
+  min-height: 276px;
+  width: 611px;
+
   border-radius: 16px;
   background-color: #171717;
   margin-bottom: 16px;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
 `;
+
+const LeftPannel = styled.div``;
 
 const UserPhoto = styled.div`
   width: 10%;
@@ -211,11 +215,13 @@ const UserPhoto = styled.div`
     height: 50px;
     width: 50px;
     border-radius: 26.5px;
+
     margin-left: 18px;
     margin-top: 17px;
   }
 `;
 const LikePost = styled.div`
+
   .hover {
     display: none;
   }
@@ -242,20 +248,34 @@ const LikePost = styled.div`
     }
   }
   width: 10%;
+
   height: 80px;
   margin-top: 19px;
   margin-left: 33px;
   margin-bottom: 4.01px;
+
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  .hover {
+    display: none;
+  }
+
   font-family: "Lato", sans-serif;
   font-size: 11px;
   font-weight: 400;
   line-height: 13px;
+
   a {
     margin-top: 9px;
     margin-left: -4px;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -276,6 +296,7 @@ const PostHeader = styled.div`
   font-weight: 400;
   line-height: 23px;
   text-align: left;
+
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -289,22 +310,28 @@ const Interactions = styled.div`
 `;
 
 const Message = styled.div`
-  height: 45px;
+
+  width: 500px;
 
   margin-top: 8px;
   margin-left: 5px;
+  margin-bottom: 8px;
   border-radius: 16px;
   font-family: "Lato", sans-serif;
   font-size: 17px;
   font-weight: 400;
   line-height: 20px;
   text-align: left;
+
+  word-wrap: break-word;
+  text-overflow: hidden;
 `;
 
 const UrlMetadata = styled.div`
   width: 85%;
   height: 155px;
   margin-left: 5px;
+  margin-block: 10px;
   border-radius: 11px;
   border: 1px solid #ffffff;
   display: flex;
@@ -349,11 +376,13 @@ const UrlLink = styled.div`
   line-height: 13px;
   letter-spacing: 0em;
   text-align: left;
+
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `;
 const ImageUrl = styled.div`
+
   width: 30%;
   img {
     width: 100%;
@@ -361,4 +390,5 @@ const ImageUrl = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
-`;
+`
+
