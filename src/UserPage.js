@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
@@ -10,9 +10,11 @@ export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
+  const {id} = useParams();
+  console.log( 'to no info',id)
 
   useEffect(() => {
-    const promisse = axios.get("http://localhost:5001/timeline");
+    const promisse = axios.get(`http://localhost:5001/user/${id}`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
@@ -31,10 +33,13 @@ export default function Timeline() {
     );
   }, [postNotifications]);
 
+  console.log('teste', posts)
+
   return (
     <Container>
       <Box1>
-      <CreatePost />
+      <Img src={posts[0].image} ></Img>  
+      <TitleUsers>{posts[0].username}</TitleUsers>
       <LoadingPost load={load}>
         <a>Loading...</a>
       </LoadingPost>
@@ -78,6 +83,7 @@ width: 100%;
 display: flex;
 justify-content: center;
 `
+
 const Posts = styled.div`
   width: 611px;
   margin-top: 29px;
@@ -101,3 +107,17 @@ const LoadingPost = styled.div`
   margin-top: 70px;
   display: ${(prop) => (!prop.load ? "none" : "initial")}; ;
 `;
+
+const TitleUsers = styled.h1`
+    font-family: Oswald;
+    font-size: 43px;
+    font-weight: 700;
+    line-height: 64px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #FFFFFF;
+
+`
+const Img = styled.img`
+    
+`

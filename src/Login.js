@@ -34,7 +34,7 @@ export default function Login() {
   function logar(event) {
     event.preventDefault();
 
-    const requisicao = axios.post("http://localhost:5000/signin", {
+    const requisicao = axios.post("http://localhost:5001/signin", {
       email,
       password,
     });
