@@ -3,6 +3,10 @@ import { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "./auth";
+import env from "react-dotenv";
+
+
+console.log('teste aqui =>',env.PORT)
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -30,7 +34,7 @@ export default function Login() {
   function logar(event) {
     event.preventDefault();
 
-    const requisicao = axios.post("http://localhost:5000/signin", {
+    const requisicao = axios.post(`http://localhost:${env.PORT}/signin`, {
       email,
       password,
     });
