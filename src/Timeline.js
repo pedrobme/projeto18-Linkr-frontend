@@ -6,8 +6,6 @@ import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
-import env from "react-dotenv";
-
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -15,7 +13,7 @@ export default function Timeline() {
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:${env.PORT}/timeline`);
+    const promisse = axios.get(`http://localhost:5000/timeline`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
@@ -123,5 +121,5 @@ const LoadingPost = styled.div`
   font-family: "Lato", sans-serif;
   font-size: 40px;
   margin-top: 70px;
-  display: ${(prop) => (!prop.load ? "none" : "initial")}; ;
+  display: ${(prop) => (!prop.load ? "none" : "initial")};
 `;

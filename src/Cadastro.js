@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"
-import env from "react-dotenv";
-
+import axios from "axios";
 
 export default function Cadastro() {
   const [username, setUsername] = useState("");
@@ -23,12 +21,11 @@ export default function Cadastro() {
     wait();
   };
 
-
   const navigate = useNavigate();
-  
+
   function cadastrar(event) {
     event.preventDefault();
-    const requisicao = axios.post(`http://localhost:${env.PORT}/signup`, {
+    const requisicao = axios.post(`http://localhost:5000/signup`, {
       email,
       password,
       username,
