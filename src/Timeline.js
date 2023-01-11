@@ -15,7 +15,7 @@ export default function Timeline() {
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:${env.PORT}/timeline`);
+    const promisse = axios.get(`http://localhost:5000/timeline`);
 
     promisse.then((res) => {
       /* console.log(res.data); */

@@ -5,7 +5,7 @@ import axios from "axios";
 import InfosPost from "./InfosPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
-import env from "react-dotenv";
+
 
 export default function HashtagPage() {
   let { hashtag } = useParams();
@@ -16,7 +16,7 @@ export default function HashtagPage() {
   const [hashtagReload, setHashtagReload] = useState("");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:${env.PORT}/hashtag/${hashtag}`);
+    const promisse = axios.get(`http://localhost:5000/hashtag/${hashtag}`);
 
     promisse.then((res) => {
       /* console.log(res.data); */

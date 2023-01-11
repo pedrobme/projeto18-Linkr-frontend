@@ -5,7 +5,7 @@ import axios from "axios";
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
-import env from "react-dotenv";
+
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -15,7 +15,7 @@ export default function Timeline() {
   console.log( 'to no info',id)
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:${env.PORT}/user/${id}`);
+    const promisse = axios.get(`http://localhost:5000/user/${id}`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
