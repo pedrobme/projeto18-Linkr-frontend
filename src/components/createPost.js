@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import { LoginContext } from "../auth";
+import env from "react-dotenv";
 
 const CreatePost = () => {
   const [link, setLink] = useState("");
@@ -22,7 +23,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/publish",
+        `http://localhost:${env.PORT}/publish`,
         publishPostObject,
         {
           headers: { Authorization: `Bearer ${authToken}` },
@@ -62,13 +63,15 @@ const CreatePost = () => {
 // Styled components
 
 const CreatePostBackground = styled.div`
+  margin-top: 50px;
   width: 611px;
   height: 209px;
+
   background-color: white;
   border-radius: 16px;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 
   padding-inline: 18px;
   padding-block: 16px;

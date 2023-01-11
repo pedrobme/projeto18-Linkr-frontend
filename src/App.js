@@ -5,11 +5,13 @@ import Login from "./Login";
 import { AuthProvider } from "./auth";
 import Timeline from './Timeline';
 import CreatePost from "./components/createPost";
-import HashtagPage from "./HashtagPage";
-import UserPage from "./UserPage";
+import HashtagPage from "./HashtagPage"
+import UserPage from "./UserPage"
+
 
 
 export default function App() {
+  
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -24,3 +26,4 @@ export default function App() {
     </AuthProvider>
   );
 }
+

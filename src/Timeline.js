@@ -5,6 +5,9 @@ import axios from "axios";
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
+import TopBar from "./components/TopBar";
+import env from "react-dotenv";
+
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -12,7 +15,7 @@ export default function Timeline() {
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    const promisse = axios.get("http://localhost:5001/timeline");
+    const promisse = axios.get(`http://localhost:${env.PORT}/timeline`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
@@ -24,62 +27,83 @@ export default function Timeline() {
         setPostNotifications(false);
       }
     });
-    promisse.catch(() =>
+    promisse.catch((err) => {
+      console.log(err);
       alert(
         "An error occured while trying to fetch the posts, please refresh the page"
-      )
-    );
+      );
+    });
   }, [postNotifications]);
 
   return (
     <Container>
-      <Box1>
-      <CreatePost />
-      <LoadingPost load={load}>
-        <a>Loading...</a>
-      </LoadingPost>
-      <Posts>
-        <Notification postNotifications={postNotifications}>
-          <a>There are no posts yet</a>
-        </Notification>
-        {posts.map((post) => (
-          <InfosPost
-            postId={post.id}
-            key={post.id}
-            username={post.username}
-            image={post.image}
-            url={post.url}
-            message={post.text}
-            titleUrl={post.titleUrl}
-            imageUrl={post.imageUrl}
-            descriptionUrl={post.descriptionUrl}
-          />
-        ))}
-      </Posts>
-      </Box1>
-      <Box2>
-        <TableTrending/>
-      </Box2>
+      <TopBar></TopBar>
+      <TimelineTitle>Timeline</TimelineTitle>
+      <TimelineMainContent>
+        <Box1>
+          <CreatePost />
+          <LoadingPost load={load}>
+            <a>Loading...</a>
+          </LoadingPost>
+          <Posts>
+            <Notification postNotifications={postNotifications}>
+              <a>There are no posts yet</a>
+            </Notification>
+            {posts.map((post) => (
+              <InfosPost
+                key={post.id}
+                postId={post.id}
+                username={post.username}
+                image={post.image}
+                url={post.url}
+                message={post.text}
+                titleUrl={post.titleUrl}
+                imageUrl={post.imageUrl}
+                descriptionUrl={post.descriptionUrl}
+              />
+            ))}
+          </Posts>
+        </Box1>
+        <Box2>
+          <TableTrending />
+        </Box2>
+      </TimelineMainContent>
     </Container>
   );
 }
 
-const Box2 =styled.div`
-    margin-left: 25px;
-`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Box2 = styled.div`
+  margin-left: 25px;
+  width: 30vw;
+`;
 
 const Box1 = styled.div`
-    display: flex;
-    flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+`;
 
-const Container = styled.div`
-width: 100%;
-display: flex;
-justify-content: center;
-`
+const TimelineMainContent = styled.div`
+  display: flex;
+  width: 80vw;
+`;
+
+const TimelineTitle = styled.h3`
+  font-weight: 700;
+  font-size: 43px;
+  margin-top: 130px;
+  margin-bottom: 40px;
+  width: 80vw;
+  color: #ffffff;
+`;
+
 const Posts = styled.div`
-  width: 611px;
   margin-top: 29px;
   display: flex;
   flex-wrap: wrap;
