@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import env from "react-dotenv"
 
 const TopBar = () => {
   const [querys, setQuerys] = useState({});
@@ -24,7 +25,7 @@ const TopBar = () => {
       const body = { querys };
 
       try {
-        const response = await axios.post("http://localhost:5000/search", body);
+        const response = await axios.post(`http://localhost:${env.PORT}/search`, body);
 
         console.log("deu bom", response);
 

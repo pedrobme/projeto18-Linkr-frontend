@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import { LoginContext } from "../auth";
+import env from "react-dotenv";
 
 const CreatePost = () => {
   const [link, setLink] = useState("");
@@ -22,7 +23,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/publish",
+        `http://localhost:${env.PORT}/publish`,
         publishPostObject,
         {
           headers: { Authorization: `Bearer ${authToken}` },

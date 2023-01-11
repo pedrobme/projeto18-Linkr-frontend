@@ -6,6 +6,8 @@ import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
+import env from "react-dotenv";
+
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -13,7 +15,7 @@ export default function Timeline() {
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    const promisse = axios.get("http://localhost:5000/timeline");
+    const promisse = axios.get(`http://localhost:${env.PORT}/timeline`);
 
     promisse.then((res) => {
       /* console.log(res.data); */

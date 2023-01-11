@@ -6,10 +6,11 @@ import { AuthProvider } from "./auth";
 import Timeline from './Timeline';
 import CreatePost from "./components/createPost";
 import HashtagPage from "./HashtagPage";
+import env from 'react-dotenv'
 
 
 export default function App() {
-  console.log('to aqui')
+  
   return (
     <AuthProvider>
       <BrowserRouter>
