@@ -6,8 +6,6 @@ import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
-import env from "react-dotenv";
-
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);

@@ -6,7 +6,6 @@ import InfosPost from "./InfosPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
 
-
 export default function HashtagPage() {
   let { hashtag } = useParams();
 
@@ -38,42 +37,43 @@ export default function HashtagPage() {
 
   return (
     <>
-    
-    <Container>
-    <TopBar></TopBar>
-    <TimelineTitle>#{hashtag}</TimelineTitle>
-    <TimelineMainContent>
-    <Box1>
-        <LoadingPost load={load}>
-          <a>Loading...</a>
-        </LoadingPost>
-        <Posts>
-          <Notification postNotifications={postNotifications}>
-            <a>There are no posts yet</a>
-          </Notification>
-          {posts.map((post) => (
-            <InfosPost
-              postId={post.id}
+      <Container>
+        <TopBar></TopBar>
+        <TimelineTitle>#{hashtag}</TimelineTitle>
+        <TimelineMainContent>
+          <Box1>
+            <LoadingPost load={load}>
+              <a>Loading...</a>
+            </LoadingPost>
+            <Posts>
+              <Notification postNotifications={postNotifications}>
+                <a>There are no posts yet</a>
+              </Notification>
+              {posts.map((post) => (
+                <InfosPost
+                  postId={post.id}
+                  setHashtagReload={setHashtagReload}
+                  key={post.id}
+                  username={post.username}
+                  image={post.image}
+                  url={post.url}
+                  message={post.text}
+                  titleUrl={post.titleUrl}
+                  imageUrl={post.imageUrl}
+                  descriptionUrl={post.descriptionUrl}
+                />
+              ))}
+            </Posts>
+          </Box1>
+          <Box2>
+            <TableTrending
+              hashtagReload={hashtagReload}
               setHashtagReload={setHashtagReload}
-              key={post.id}
-              username={post.username}
-              image={post.image}
-              url={post.url}
-              message={post.text}
-              titleUrl={post.titleUrl}
-              imageUrl={post.imageUrl}
-              descriptionUrl={post.descriptionUrl} />
-          ))}
-        </Posts>
-      </Box1>
-      <Box2>
-        <TableTrending
-          hashtagReload={hashtagReload}
-          setHashtagReload={setHashtagReload} />
-      </Box2>
-    </TimelineMainContent>
-      
-    </Container></>
+            />
+          </Box2>
+        </TimelineMainContent>
+      </Container>
+    </>
   );
 }
 
@@ -137,5 +137,5 @@ const LoadingPost = styled.div`
   font-size: 40px;
   margin-top: 70px;
 
-  display: ${(prop) => (!prop.load ? "none" : "initial")}; ;
+  display: ${(prop) => (!prop.load ? "none" : "initial")};
 `;

@@ -2,17 +2,17 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import InfosPost from "./InfosPost";
+import UserInfosPost from "./UserInfosPost";
 import CreatePost from "./components/createPost";
-import TableTrending from "./components/TableTrending";
-
+import UserTableTrending from "./components/UserTableTrending";
+import TopBar from "./components/TopBar";
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
-  const {id} = useParams();
-  console.log( 'to no info',id)
+  const { id } = useParams();
+  console.log("to no info", id);
 
   useEffect(() => {
     const promisse = axios.get(`http://localhost:5000/user/${id}`);
@@ -21,7 +21,6 @@ export default function Timeline() {
       /* console.log(res.data); */
       setPosts(res.data);
       setLoad(false);
-      console.log(posts);
 
       if (posts.length === 0) {
         setPostNotifications(false);
@@ -34,64 +33,80 @@ export default function Timeline() {
     );
   }, [postNotifications]);
 
-  console.log('teste', posts)
+  console.log("dados vindo do back =>", id, Posts);
 
   return (
     <Container>
-      <Box1>
-      <Img src={posts[0].image} ></Img>  
-      <TitleUsers>{posts[0].username}</TitleUsers>
-      <LoadingPost load={load}>
-        <a>Loading...</a>
-      </LoadingPost>
-      <Posts>
-        <Notification postNotifications={postNotifications}>
-          <a>There are no posts yet</a>
-        </Notification>
-        {posts.map((post) => (
-          <InfosPost
-            postId={post.id}
-            key={post.id}
-            username={post.username}
-            image={post.image}
-            url={post.url}
-            message={post.text}
-            titleUrl={post.titleUrl}
-            imageUrl={post.imageUrl}
-            descriptionUrl={post.descriptionUrl}
-          />
-        ))}
-      </Posts>
-      </Box1>
-      <Box2>
-        <TableTrending/>
-      </Box2>
+      <TopBar> </TopBar>
+
+      <ContainerTimeLine>
+        <TimelineMainContent>
+          <TopUserInfo>
+            <Img src={posts.length > 0 ? posts[0].image : ""} />
+            <TimelineTitle>
+              {posts.length > 0 ? posts[0].username : ""}
+            </TimelineTitle>
+          </TopUserInfo>
+          <Box1>
+            <LoadingPost load={load}>
+              <a>Loading...</a>
+            </LoadingPost>
+            <Posts>
+              <Notification postNotifications={postNotifications}>
+                <a>There are no posts yet</a>
+              </Notification>
+              {posts.map((post) => (
+                <UserInfosPost
+                  key={post.id}
+                  postId={post.id}
+                  username={post.username}
+                  image={post.image}
+                  url={post.url}
+                  message={post.text}
+                  titleUrl={post.titleUrl}
+                  imageUrl={post.imageUrl}
+                  descriptionUrl={post.descriptionUrl}
+                />
+              ))}
+            </Posts>
+          </Box1>
+        </TimelineMainContent>
+        <Box2>
+          <UserTableTrending />
+        </Box2>
+      </ContainerTimeLine>
     </Container>
   );
 }
 
-const Box2 =styled.div`
-    margin-left: 25px;
-`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ContainerTimeLine = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+`;
 
 const Box1 = styled.div`
-    display: flex;
-    flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+`;
 
-const Container = styled.div`
-width: 100%;
-display: flex;
-justify-content: center;
-`
+const Box2 = styled.div``;
 
 const Posts = styled.div`
   width: 611px;
-  margin-top: 29px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 `;
+
 const Notification = styled.div`
   display: ${(prop) => (prop.postNotifications ? "initial" : "none")};
   margin-left: 80px;
@@ -106,19 +121,36 @@ const LoadingPost = styled.div`
   font-family: "Lato", sans-serif;
   font-size: 40px;
   margin-top: 70px;
-  display: ${(prop) => (!prop.load ? "none" : "initial")}; ;
+  display: ${(prop) => (!prop.load ? "none" : "initial")};
 `;
 
-const TitleUsers = styled.h1`
-    font-family: Oswald;
-    font-size: 43px;
-    font-weight: 700;
-    line-height: 64px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #FFFFFF;
+const TimelineMainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 635px;
+  justify-content: center;
+`;
 
-`
+const TopUserInfo = styled.div`
+  margin-top: 100px;
+  max-height: 70px;
+  width: 800px;
+  padding-bottom: 41px;
+  display: flex;
+  align-items: center;
+`;
+
 const Img = styled.img`
-    
-`
+  height: 53px;
+  width: 53px;
+  border-radius: 304px;
+`;
+
+const TimelineTitle = styled.h3`
+  font-family: Oswald;
+  padding-bottom: 7px;
+  padding-left: 18px;
+  font-size: 43px;
+  font-weight: 700;
+  color: #ffffff;
+`;

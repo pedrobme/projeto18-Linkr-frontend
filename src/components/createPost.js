@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import styled from "styled-components";
+import { LoginContext } from "../auth";
 
 const CreatePost = () => {
   const [link, setLink] = useState("");

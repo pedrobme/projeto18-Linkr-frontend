@@ -2,11 +2,6 @@ import styled from "styled-components";
 import { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { LoginContext } from "./auth";
-
-
-
-console.log('teste aqui =>',5000)
 
 export default function Login() {
   const [email, setEmail] = useState("");
