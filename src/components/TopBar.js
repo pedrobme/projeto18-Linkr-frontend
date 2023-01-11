@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { IoIosArrowDown } from "react-icons/io";
 
-const TopBar = () => {
+const TopBar = ({ userInfo }) => {
   const [querys, setQuerys] = useState({});
   const [searchUsers, setSearcheUsers] = useState([]);
 
@@ -71,7 +72,10 @@ const TopBar = () => {
           </Value>
         </Result>
       </Search>
-      <TopBarUserController></TopBarUserController>
+      <TopBarUserController>
+        <IoIosArrowDown className="arrowIcon"></IoIosArrowDown>
+        <img src={userInfo.image} />
+      </TopBarUserController>
     </TopBarContainer>
   );
 };
@@ -169,10 +173,25 @@ const UserFoundImg = styled.img`
 `;
 
 const TopBarUserController = styled.div`
-  background-color: yellow;
-
-  width: 100px;
   height: 72px;
+  width: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+
+  img {
+    height: 50px;
+    width: 50px;
+    border-radius: 26.5px;
+  }
+
+  .arrowIcon {
+    font-size: 30px;
+    height: 50px;
+  }
 `;
 
 export default TopBar;

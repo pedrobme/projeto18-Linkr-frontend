@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import { LoginContext } from "../auth";
 
-const CreatePost = () => {
+const CreatePost = ({ userInfo }) => {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
   const authToken = localStorage.getItem("authToken");
@@ -40,7 +40,7 @@ const CreatePost = () => {
   return (
     <CreatePostBackground>
       <LeftPannel>
-        <img src="https://post.healthline.com/wp-content/uploads/2020/08/3180-Pug_green_grass-732x549-thumbnail-732x549.jpg" />
+        <img src={userInfo.image} />
       </LeftPannel>
       <MainContentForm onSubmit={handleSubmit}>
         <h3>What are you going o share today?</h3>
