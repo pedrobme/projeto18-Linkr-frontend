@@ -2,13 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import env from "react-dotenv";
 
 export default function TableTrending({ hashtagReload, setHashtagReload }) {
   const [hashtags, setHashtags] = useState([]);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:${env.PORT}/trending`);
+    const promisse = axios.get(`http://localhost:5000/trending`);
 
     promisse.then((res) => {
       console.log(res.data);

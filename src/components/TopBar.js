@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import env from "react-dotenv"
+
 import { Link } from "react-router-dom";
 
 const TopBar = () => {
@@ -24,7 +24,7 @@ const TopBar = () => {
       const body = { querys };
 
       try {
-        const response = await axios.post(`http://localhost:${env.PORT}/search`, body)
+        const response = await axios.post(`http://localhost:5000/search`, body);
         setSearcheUsers(response.data);
       } catch ({ response }) {
         alert(response.data.message);
@@ -34,7 +34,7 @@ const TopBar = () => {
   }, [querys]);
   function ResutUsers() {
     return searchUsers.map((user) => {
-      console.log('TO NO TOPPPPP =>', user)
+      console.log("TO NO TOPPPPP =>", user);
       return (
         <Link to={`/user/${user.id}`}>
           <UserFound>
@@ -105,7 +105,6 @@ const Search = styled.div`
   flex-direction: column;
   position: relative;
   margin-bottom: 13;
-  
 
   input {
     margin-top: 13px;
