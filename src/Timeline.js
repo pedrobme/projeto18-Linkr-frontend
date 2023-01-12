@@ -11,6 +11,12 @@ export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
+  const [userInfo, setUserInfo] = useState({});
+  const [logoutVisibility, setLogoutVisibility] = useState(false);
+
+  console.log(logoutVisibility);
+
+  const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
     const promisse = axios.get(`http://localhost:5000/timeline`);
@@ -34,12 +40,18 @@ export default function Timeline() {
   }, [postNotifications]);
 
   return (
-    <Container>
+    <Container
+      onClick={() => {
+        if (logoutVisibility === true) {
+          setLogoutVisibility(false);
+        }
+      }}
+    >
       <TopBar></TopBar>
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
         <Box1>
-          <CreatePost />
+          <CreatePost userInfo={userInfo} />
           <LoadingPost load={load}>
             <a>Loading...</a>
           </LoadingPost>
