@@ -5,7 +5,6 @@ import axios from "axios";
 import UserInfosPost from "./UserInfosPost";
 import CreatePost from "./components/createPost";
 import UserTableTrending from "./components/UserTableTrending";
-
 import TopBar from "./components/TopBar";
 
 export default function Timeline() {

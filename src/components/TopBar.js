@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import LogoutDropdown from "./LogoutDropdown";
 
 const TopBar = () => {
   const [querys, setQuerys] = useState({});
   const [searchUsers, setSearcheUsers] = useState([]);
+
+  const navigate = useNavigate();
 
   function handleForm(e) {
     if (querys.length >= 3) {
@@ -48,7 +50,7 @@ const TopBar = () => {
 
   return (
     <TopBarContainer>
-      <TopBarTitle>linkr</TopBarTitle>
+      <TopBarTitle onClick={() => navigate("/timeline")}>linkr</TopBarTitle>
       <Search>
         <DebounceInput
           minLength={3}
@@ -68,7 +70,7 @@ const TopBar = () => {
           </Value>
         </Result>
       </Search>
-      <TopBarUserController></TopBarUserController>
+      <LogoutDropdown></LogoutDropdown>
     </TopBarContainer>
   );
 };
@@ -95,6 +97,8 @@ const TopBarContainer = styled.div`
 const TopBarTitle = styled.h1`
   font-weight: 700;
   font-size: 49px;
+
+  cursor: pointer;
 
   color: #ffffff;
 `;
@@ -164,13 +168,6 @@ const UserFoundImg = styled.img`
   left: 454px;
   top: 72px;
   border-radius: 304px;
-`;
-
-const TopBarUserController = styled.div`
-  background-color: yellow;
-
-  width: 100px;
-  height: 72px;
 `;
 
 export default TopBar;
