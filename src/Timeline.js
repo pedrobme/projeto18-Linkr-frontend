@@ -11,6 +11,12 @@ export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
+  const [userInfo, setUserInfo] = useState({});
+  const [logoutVisibility, setLogoutVisibility] = useState(false);
+
+  console.log(logoutVisibility);
+
+  const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
     const promisse = axios.get(`http://localhost:5000/timeline`);
@@ -31,15 +37,39 @@ export default function Timeline() {
         "An error occured while trying to fetch the posts, please refresh the page"
       );
     });
+
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/timeline/me", {
+          headers: { Authorization: `Bearer ${authToken}` },
+        });
+
+        setUserInfo(response.data[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserInfo();
   }, [postNotifications]);
 
   return (
-    <Container>
-      <TopBar></TopBar>
+    <Container
+      onClick={() => {
+        if (logoutVisibility === true) {
+          setLogoutVisibility(false);
+        }
+      }}
+    >
+      <TopBar
+        logoutVisibility={logoutVisibility}
+        setLogoutVisibility={setLogoutVisibility}
+        userInfo={userInfo}
+      ></TopBar>
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
         <Box1>
-          <CreatePost />
+          <CreatePost userInfo={userInfo} />
           <LoadingPost load={load}>
             <a>Loading...</a>
           </LoadingPost>
