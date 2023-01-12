@@ -14,18 +14,18 @@ export default function Timeline() {
   const [userInfo, setUserInfo] = useState({});
   const [logoutVisibility, setLogoutVisibility] = useState(false);
 
-  console.log(logoutVisibility);
+  // console.log(logoutVisibility);
 
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/timeline`);
+    const promisse = axios.get(`http://localhost:5001/timeline`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
       setPosts(res.data);
       setLoad(false);
-      console.log(posts);
+      // console.log(posts);
 
       if (posts.length === 0) {
         setPostNotifications(false);
@@ -60,6 +60,7 @@ export default function Timeline() {
               <a>There are no posts yet</a>
             </Notification>
             {posts.map((post) => (
+             
               <InfosPost
                 key={post.id}
                 postId={post.id}
@@ -70,6 +71,7 @@ export default function Timeline() {
                 titleUrl={post.titleUrl}
                 imageUrl={post.imageUrl}
                 descriptionUrl={post.descriptionUrl}
+                usersId={post.usersId}
               />
             ))}
           </Posts>
