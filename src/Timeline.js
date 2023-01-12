@@ -12,6 +12,9 @@ export default function Timeline() {
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
   const [userInfo, setUserInfo] = useState({});
+  const [logoutVisibility, setLogoutVisibility] = useState(false);
+
+  console.log(logoutVisibility);
 
   const authToken = localStorage.getItem("authToken");
 
@@ -51,8 +54,18 @@ export default function Timeline() {
   }, [postNotifications]);
 
   return (
-    <Container>
-      <TopBar userInfo={userInfo}></TopBar>
+    <Container
+      onClick={() => {
+        if (logoutVisibility === true) {
+          setLogoutVisibility(false);
+        }
+      }}
+    >
+      <TopBar
+        logoutVisibility={logoutVisibility}
+        setLogoutVisibility={setLogoutVisibility}
+        userInfo={userInfo}
+      ></TopBar>
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
         <Box1>
