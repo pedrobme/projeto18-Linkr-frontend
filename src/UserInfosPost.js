@@ -176,21 +176,6 @@ export default function InfosPost({
             <Link to={`/user/${userId}`}>
               <h1>{username}</h1>{" "}
             </Link>
-            <Interactions>
-              {" "}
-              <FaPencilAlt
-                onClick={() => {
-                  editingPost
-                    ? alert("you must end your current editing post first")
-                    : setEditingPost(true);
-                }}
-              />{" "}
-              <BsFillTrashFill
-                onClick={() => {
-                  deletePost(postId);
-                }}
-              />{" "}
-            </Interactions>
           </PostHeader>
           {editingPost ? (
             <EditingPostForm onSubmit={(event) => editPost(event)}>

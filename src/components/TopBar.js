@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { IoIosArrowDown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const TopBar = ({ userInfo, setLogoutVisibility, logoutVisibility }) => {
+
   const [querys, setQuerys] = useState({});
   const [searchUsers, setSearcheUsers] = useState([]);
 
@@ -16,8 +18,6 @@ const TopBar = ({ userInfo, setLogoutVisibility, logoutVisibility }) => {
   function handleForm(e) {
     if (querys.length >= 3) {
       setSearcheUsers([]);
-
-      console.log("a seguir user =>", searchUsers);
 
       e.preventDefault();
     }
@@ -30,10 +30,7 @@ const TopBar = ({ userInfo, setLogoutVisibility, logoutVisibility }) => {
       const body = { querys };
 
       try {
-        const response = await axios.post("http://localhost:5000/search", body);
-
-        console.log("deu bom", response);
-
+        const response = await axios.post(`http://localhost:5000/search`, body);
         setSearcheUsers(response.data);
       } catch ({ response }) {
         alert(response.data.message);
@@ -41,16 +38,16 @@ const TopBar = ({ userInfo, setLogoutVisibility, logoutVisibility }) => {
     }
     sendForm();
   }, [querys]);
-
-  console.log("a seguir querys =>", querys);
-
   function ResutUsers() {
     return searchUsers.map((user) => {
+      console.log("TO NO TOPPPPP =>", user);
       return (
-        <UserFound>
-          <UserFoundImg src={user.image} />
-          <UserFoundName>{user.username}</UserFoundName>
-        </UserFound>
+        <Link to={`/user/${user.id}`}>
+          <UserFound>
+            <UserFoundImg src={user.image} />
+            <UserFoundName>{user.username}</UserFoundName>
+          </UserFound>
+        </Link>
       );
     });
   }
@@ -139,6 +136,7 @@ const Search = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-bottom: 13;
 
   input {
     margin-top: 13px;

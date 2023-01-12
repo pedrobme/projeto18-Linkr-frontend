@@ -19,7 +19,7 @@ export default function Timeline() {
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get("http://localhost:5000/timeline");
+    const promisse = axios.get(`http://localhost:5000/timeline`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
@@ -151,5 +151,5 @@ const LoadingPost = styled.div`
   font-family: "Lato", sans-serif;
   font-size: 40px;
   margin-top: 70px;
-  display: ${(prop) => (!prop.load ? "none" : "initial")}; ;
+  display: ${(prop) => (!prop.load ? "none" : "initial")};
 `;

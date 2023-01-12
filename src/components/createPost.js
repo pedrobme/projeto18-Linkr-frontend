@@ -22,7 +22,7 @@ const CreatePost = ({ userInfo }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/publish",
+        `http://localhost:5000/publish`,
         publishPostObject,
         {
           headers: { Authorization: `Bearer ${authToken}` },

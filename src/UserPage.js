@@ -2,45 +2,52 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import InfosPost from "./InfosPost";
-import TableTrending from "./components/TableTrending";
+import UserInfosPost from "./UserInfosPost";
+import CreatePost from "./components/createPost";
+import UserTableTrending from "./components/UserTableTrending";
+
 import TopBar from "./components/TopBar";
 
-export default function HashtagPage() {
-  let { hashtag } = useParams();
-
+export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
-  const [hashtagReload, setHashtagReload] = useState("");
+  const { id } = useParams();
+  console.log("to no info", id);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/hashtag/${hashtag}`);
+    const promisse = axios.get(`http://localhost:5000/user/${id}`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
       setPosts(res.data);
       setLoad(false);
-      console.log(posts);
 
       if (posts.length === 0) {
         setPostNotifications(false);
       }
     });
-    promisse.catch((err) => {
-      console.log(err);
+    promisse.catch(() =>
       alert(
         "An error occured while trying to fetch the posts, please refresh the page"
-      );
-    });
-  }, [hashtagReload]);
+      )
+    );
+  }, [postNotifications]);
+
+  console.log("dados vindo do back =>", id, Posts);
 
   return (
-    <>
-      <Container>
-        <TopBar></TopBar>
-        <TimelineTitle>#{hashtag}</TimelineTitle>
+    <Container>
+      <TopBar> </TopBar>
+
+      <ContainerTimeLine>
         <TimelineMainContent>
+          <TopUserInfo>
+            <Img src={posts.length > 0 ? posts[0].image : ""} />
+            <TimelineTitle>
+              {posts.length > 0 ? posts[0].username : ""}
+            </TimelineTitle>
+          </TopUserInfo>
           <Box1>
             <LoadingPost load={load}>
               <a>Loading...</a>
@@ -50,10 +57,9 @@ export default function HashtagPage() {
                 <a>There are no posts yet</a>
               </Notification>
               {posts.map((post) => (
-                <InfosPost
-                  postId={post.id}
-                  setHashtagReload={setHashtagReload}
+                <UserInfosPost
                   key={post.id}
+                  postId={post.id}
                   username={post.username}
                   image={post.image}
                   url={post.url}
@@ -65,65 +71,45 @@ export default function HashtagPage() {
               ))}
             </Posts>
           </Box1>
-          <Box2>
-            <TableTrending
-              hashtagReload={hashtagReload}
-              setHashtagReload={setHashtagReload}
-            />
-          </Box2>
         </TimelineMainContent>
-      </Container>
-    </>
+        <Box2>
+          <UserTableTrending />
+        </Box2>
+      </ContainerTimeLine>
+    </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
 `;
 
-const Box2 = styled.div`
-  margin-left: 25px;
-  margin-top: 26px;
-  width: 30vw;
+const ContainerTimeLine = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
 `;
 
 const Box1 = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 50vw;
 `;
 
-const TimelineMainContent = styled.div`
-  display: flex;
-
-  width: 80vw;
-`;
-
-const TimelineTitle = styled.h3`
-  font-weight: 700;
-  font-size: 43px;
-
-  margin-top: 130px;
-  margin-bottom: 40px;
-
-  width: 80vw;
-
-  color: #ffffff;
-`;
+const Box2 = styled.div``;
 
 const Posts = styled.div`
-  margin-top: 29px;
+  width: 611px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 `;
+
 const Notification = styled.div`
   display: ${(prop) => (prop.postNotifications ? "initial" : "none")};
-
   margin-left: 80px;
   color: #ffffff;
   font-family: "Lato", sans-serif;
@@ -136,6 +122,36 @@ const LoadingPost = styled.div`
   font-family: "Lato", sans-serif;
   font-size: 40px;
   margin-top: 70px;
-
   display: ${(prop) => (!prop.load ? "none" : "initial")};
+`;
+
+const TimelineMainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 635px;
+  justify-content: center;
+`;
+
+const TopUserInfo = styled.div`
+  margin-top: 100px;
+  max-height: 70px;
+  width: 800px;
+  padding-bottom: 41px;
+  display: flex;
+  align-items: center;
+`;
+
+const Img = styled.img`
+  height: 53px;
+  width: 53px;
+  border-radius: 304px;
+`;
+
+const TimelineTitle = styled.h3`
+  font-family: Oswald;
+  padding-bottom: 7px;
+  padding-left: 18px;
+  font-size: 43px;
+  font-weight: 700;
+  color: #ffffff;
 `;

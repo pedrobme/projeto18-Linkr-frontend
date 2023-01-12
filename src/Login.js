@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { LoginContext } from "./auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -30,7 +29,7 @@ export default function Login() {
   function logar(event) {
     event.preventDefault();
 
-    const requisicao = axios.post("http://localhost:5000/signin", {
+    const requisicao = axios.post(`http://localhost:5000/signin`, {
       email,
       password,
     });

@@ -21,12 +21,11 @@ export default function Cadastro() {
     wait();
   };
 
-
   const navigate = useNavigate();
-  
+
   function cadastrar(event) {
     event.preventDefault();
-    const requisicao = axios.post("http://localhost:5000/signup", {
+    const requisicao = axios.post(`http://localhost:5000/signup`, {
       email,
       password,
       username,
