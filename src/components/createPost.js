@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import { LoginContext } from "../auth";
+import { UserInfoContext } from "../userInfo";
 
-const CreatePost = ({ userInfo }) => {
+const CreatePost = () => {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
   const authToken = localStorage.getItem("authToken");
+
+  const { userInfo } = useContext(UserInfoContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

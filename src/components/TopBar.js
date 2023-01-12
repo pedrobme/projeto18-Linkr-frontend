@@ -2,16 +2,14 @@ import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { IoIosArrowDown } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
-const TopBar = ({ userInfo, setLogoutVisibility, logoutVisibility }) => {
+import { Link, useNavigate } from "react-router-dom";
 
+import LogoutDropdown from "./LogoutDropdown";
+
+const TopBar = () => {
   const [querys, setQuerys] = useState({});
   const [searchUsers, setSearcheUsers] = useState([]);
-
-  const authToken = localStorage.getItem("authToken");
 
   const navigate = useNavigate();
 
@@ -52,23 +50,9 @@ const TopBar = ({ userInfo, setLogoutVisibility, logoutVisibility }) => {
     });
   }
 
-  async function signOutUser() {
-    try {
-      const response = await axios.delete("http://localhost:5000/signout", {
-        data: { token: authToken },
-      });
-
-      localStorage.removeItem("authToken");
-
-      navigate("/");
-    } catch (err) {
-      console.log("signOutUser error: ", err);
-    }
-  }
-
   return (
     <TopBarContainer>
-      <TopBarTitle>linkr</TopBarTitle>
+      <TopBarTitle onClick={() => navigate("/timeline")}>linkr</TopBarTitle>
       <Search>
         <DebounceInput
           minLength={3}
@@ -88,19 +72,7 @@ const TopBar = ({ userInfo, setLogoutVisibility, logoutVisibility }) => {
           </Value>
         </Result>
       </Search>
-      <TopBarUserController>
-        <IoIosArrowDown
-          onClick={() => setLogoutVisibility(!logoutVisibility)}
-          className="arrowIcon"
-        ></IoIosArrowDown>
-        <img
-          src={userInfo.image}
-          onClick={() => setLogoutVisibility(!logoutVisibility)}
-        />
-        <LogoutDiv logoutVisibility={logoutVisibility} onClick={signOutUser}>
-          Logout
-        </LogoutDiv>
-      </TopBarUserController>
+      <LogoutDropdown></LogoutDropdown>
     </TopBarContainer>
   );
 };
@@ -127,6 +99,8 @@ const TopBarContainer = styled.div`
 const TopBarTitle = styled.h1`
   font-weight: 700;
   font-size: 49px;
+
+  cursor: pointer;
 
   color: #ffffff;
 `;
@@ -196,55 +170,6 @@ const UserFoundImg = styled.img`
   left: 454px;
   top: 72px;
   border-radius: 304px;
-`;
-
-const TopBarUserController = styled.div`
-  height: 72px;
-  width: 90px;
-
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  cursor: pointer;
-
-  img {
-    height: 50px;
-    width: 50px;
-    border-radius: 26.5px;
-  }
-
-  .arrowIcon {
-    font-size: 30px;
-    height: 50px;
-    color: #ffffff;
-  }
-`;
-
-const LogoutDiv = styled.div`
-  position: absolute;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  bottom: -80px;
-  right: 0;
-
-  width: 200px;
-  height: 80px;
-
-  background-color: #171717;
-  border-radius: 0px 0px 20px 20px;
-
-  color: #ffffff;
-
-  font-weight: 700;
-  font-size: 17px;
-
-  display: ${(props) => (props.logoutVisibility ? "flex" : "none")};
 `;
 
 export default TopBar;
