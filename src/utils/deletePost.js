@@ -5,7 +5,7 @@ export default async function deletePost(postId) {
 
   try {
     const response = await axios.delete(
-      `http://localhost:5000/timeline/${postId}`
+      `http://localhost:5001/timeline/${postId}`
     );
 
     console.log(response);

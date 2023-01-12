@@ -15,7 +15,7 @@ export default function Timeline() {
   console.log("to no info", id);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/user/${id}`);
+    const promisse = axios.get(`http://localhost:5001/user/${id}`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
@@ -33,7 +33,7 @@ export default function Timeline() {
     );
   }, [postNotifications]);
 
-  console.log("dados vindo do back =>", id, Posts);
+  // console.log("dados vindo do back =>", id, Posts);
 
   return (
     <Container>
@@ -66,6 +66,7 @@ export default function Timeline() {
                   titleUrl={post.titleUrl}
                   imageUrl={post.imageUrl}
                   descriptionUrl={post.descriptionUrl}
+                  usersId={post.userId}
                 />
               ))}
             </Posts>
