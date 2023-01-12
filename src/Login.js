@@ -2,11 +2,14 @@ import styled from "styled-components";
 import { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserInfoContext } from "./userInfo";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const { setUserInfo } = useContext(UserInfoContext);
 
   const buttRef = useRef();
 
@@ -20,8 +23,23 @@ export default function Login() {
     wait();
   };
 
+  const getUserInfo = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/timeline/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
+
+      setUserInfo(response.data[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
+      getUserInfo();
       navigate("/timeline");
     }
   }, []);
@@ -37,6 +55,8 @@ export default function Login() {
     requisicao.then((response) => {
       localStorage.setItem("authToken", response.data);
       console.log(response.data);
+
+      getUserInfo();
 
       navigate("/timeline");
     });

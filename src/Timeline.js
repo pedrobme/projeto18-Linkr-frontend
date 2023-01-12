@@ -37,20 +37,6 @@ export default function Timeline() {
         "An error occured while trying to fetch the posts, please refresh the page"
       );
     });
-
-    const getUserInfo = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/timeline/me", {
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-
-        setUserInfo(response.data[0]);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getUserInfo();
   }, [postNotifications]);
 
   return (
@@ -61,11 +47,7 @@ export default function Timeline() {
         }
       }}
     >
-      <TopBar
-        logoutVisibility={logoutVisibility}
-        setLogoutVisibility={setLogoutVisibility}
-        userInfo={userInfo}
-      ></TopBar>
+      <TopBar></TopBar>
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
         <Box1>
