@@ -29,7 +29,7 @@ const CreatePost = () => {
         }
       );
 
-      window.location.reload(false);
+      window.location.reload();
 
       console.log(response);
     } catch (err) {

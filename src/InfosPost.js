@@ -28,6 +28,7 @@ export default function InfosPost({
   const [likes, setLikes] = useState([]);
   const [userId, setUserId] = useState(undefined);
   const [editingPost, setEditingPost] = useState(false);
+  
 
   const [editingPostText, setEditingPostText] = useState("");
   const navigate = useNavigate();

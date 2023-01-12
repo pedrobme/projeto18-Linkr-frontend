@@ -19,10 +19,10 @@ export default function Timeline() {
       /* console.log(res.data); */
       setPosts(res.data);
       setLoad(false);
-      console.log(posts);
+      console.log(res.data);
 
-      if (posts.length === 0) {
-        setPostNotifications(false);
+      if (res.data.length === 0) {
+        setPostNotifications(true);
       }
     });
     promisse.catch((err) => {
@@ -31,7 +31,7 @@ export default function Timeline() {
         "An error occured while trying to fetch the posts, please refresh the page"
       );
     });
-  }, [postNotifications]);
+  }, []);
 
   return (
     <Container>
