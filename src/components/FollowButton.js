@@ -49,7 +49,7 @@ export default function FollowButton ({userId}) {
         promisse.catch((err) => {
         console.log(err);
         alert(
-            "An error occured while trying to fetch the posts, please refresh the page"
+            "Error"
         );
         });
 
@@ -70,7 +70,7 @@ export default function FollowButton ({userId}) {
         promisse.catch((err) => {
         console.log(err);
         alert(
-            "An error occured while trying to fetch the posts, please refresh the page"
+            "Error"
         );
         });
 
