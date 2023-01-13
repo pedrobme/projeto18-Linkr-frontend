@@ -18,7 +18,7 @@ const LogoutDropdown = () => {
 
   async function signOutUser() {
     try {
-      const response = await axios.delete("http://localhost:5000/signout", {
+      const response = await axios.delete("http://localhost:5001/signout", {
         data: { token: authToken },
       });
 
