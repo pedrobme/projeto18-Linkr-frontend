@@ -42,17 +42,22 @@ export default function InfosPost({
   const [postDelete, setPostDelete] = useState(false);
   const [isRepost, setIsRepost] = useState(false);
 
+  const [commentSent, setCommentSent] = useState(false);
+  console.log(commentSent);
+
   const [editingPostText, setEditingPostText] = useState("");
 
   const navigate = useNavigate();
 
-  function sendComments(event) {
-    event.preventDefault();
+  function sendComments() {
     const request = axios.post(`http://localhost:5001/comment`, {
       comment: commentUser,
       userId: count.id,
       postId: postId,
     });
+
+    setCommentSent(!commentSent);
+
     request.then((response) => {
       console.log(response.data);
     });
@@ -132,7 +137,7 @@ export default function InfosPost({
       setComment(res.data.rows);
       console.log(res.data);
     });
-  }, []);
+  }, [commentSent]);
 
   function liked() {
     const object = {
@@ -346,7 +351,7 @@ export default function InfosPost({
               <CiLocationArrow1
                 size={40}
                 color="white"
-                onClick={sendComments}
+                onClick={() => sendComments()}
               />
             </SendComment>
           </AllComents>
@@ -394,7 +399,7 @@ const AllComents = styled.div`
   border-radius: 16px;
   margin-top: -30px;
   margin-bottom: 44px;
-  padding-botton: 25px;
+  padding-bottom: 25px;
 `;
 const ImageComment = styled.img`
   width: 39px;
