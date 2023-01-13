@@ -1,13 +1,11 @@
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
-import { getUserInfo } from "./utils/getUserInfo";
-import { UserInfoContext } from "./userInfo";
 import AtualizationFeed from "./components/AtualizationFeed";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -15,14 +13,17 @@ export default function Timeline() {
   const [posts, setPosts] = useState(null);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
+  const [userInfo, setUserInfo] = useState({});
   const [logoutVisibility, setLogoutVisibility] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
 
   /* console.log(logoutVisibility); */
 
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5001/timeline`, {
+    const promisse = axios.get(`http://localhost:5000/timeline`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -84,11 +85,14 @@ export default function Timeline() {
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
         <Box1>
-          <CreatePost userInfo={userInfo} />
-          <LoadingPost load={load}>
-            <a>Loading...</a>
-          </LoadingPost>
+
           <Posts>
+            <CreatePost userInfo={userInfo} />
+
+            <LoadingPost load={load}>
+              <a>Loading...</a>
+            </LoadingPost>
+            <AtualizationFeed posts={posts} />
             <Notification postNotifications={postNotifications}>
               <a>There are no posts yet</a>
             </Notification>
@@ -163,7 +167,7 @@ const TimelineTitle = styled.h3`
                 `;
 
 const Posts = styled.div`
-
+background-color: blue;
 
                 margin-top: 29px;
                 display: flex;
