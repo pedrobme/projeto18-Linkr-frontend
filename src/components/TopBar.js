@@ -111,16 +111,16 @@ const TopBarTitle = styled.h1`
 `;
 
 const Search = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   position: relative;
   margin-bottom: 13;
 
+  width: 60%;
+
   input {
-    margin-top: 13px;
     height: 45px;
-    width: 563px;
+    width: 100%;
     left: 437px;
     top: 13px;
     border: none;
@@ -139,12 +139,12 @@ const Search = styled.div`
 `;
 const Result = styled.div`
   min-height: 20px;
-  width: 567px;
+  width: 100%;
   background: #e7e7e7;
   border-radius: 5px;
   position: absolute;
   z-index: 1;
-  top: 12px;
+  top: 0px;
 `;
 const Value = styled.div`
   margin-top: 25px;
