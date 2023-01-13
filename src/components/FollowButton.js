@@ -10,7 +10,7 @@ export default function FollowButton ({userId}) {
     const authToken = localStorage.getItem("authToken");
 
     useEffect(()=> {
-        const promisse = axios.get(`http://localhost:5000/followers/${userId}`, {
+        const promisse = axios.get(`http://localhost:5001/followers/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           });
 
@@ -38,7 +38,7 @@ export default function FollowButton ({userId}) {
 
 
 
-        const promisse = axios.post(`http://localhost:5000/followers/${userId}`, [], {
+        const promisse = axios.post(`http://localhost:5001/followers/${userId}`, [], {
             headers: { Authorization: `Bearer ${authToken}` },
           });
 
@@ -59,7 +59,7 @@ export default function FollowButton ({userId}) {
 
 
 
-        const promisse = axios.delete(`http://localhost:5000/unfollow/${userId}`, {
+        const promisse = axios.delete(`http://localhost:5001/unfollow/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           });
 
