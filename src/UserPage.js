@@ -7,6 +7,8 @@ import CreatePost from "./components/createPost";
 import UserTableTrending from "./components/UserTableTrending";
 import TopBar from "./components/TopBar";
 import InfosPost from "./InfosPost";
+import FollowButton from "./components/FollowButton";
+
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -16,7 +18,7 @@ export default function Timeline() {
   console.log("deu refresh");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/user/${id}`);
+    const promisse = axios.get(`http://localhost:5001/user/${id}`);
 
     promisse.then((res) => {
       console.log("resUserPage: ", res.data);
@@ -36,7 +38,7 @@ export default function Timeline() {
     );
   }, [postNotifications, id]);
 
-  console.log("dados vindo do back =>", id, Posts);
+  // console.log("dados vindo do back =>", id, Posts);
 
   return (
     <Container>
@@ -45,10 +47,14 @@ export default function Timeline() {
       <ContainerTimeLine>
         <TimelineMainContent>
           <TopUserInfo>
-            <Img src={posts.length > 0 ? posts[0].image : ""} />
-            <TimelineTitle>
-              {posts.length > 0 ? posts[0].username : ""}
-            </TimelineTitle>
+            <div className="box1">
+              <Img src={posts.length > 0 ? posts[0].image : ""} />
+              <TimelineTitle>
+                {posts.length > 0 ? posts[0].username : ""}
+              </TimelineTitle>
+            </div>
+            
+            <FollowButton userId={id}/>
           </TopUserInfo>
           <Box1>
             <LoadingPost load={load}>
@@ -71,6 +77,7 @@ export default function Timeline() {
                   titleUrl={post.titleUrl}
                   imageUrl={post.imageUrl}
                   descriptionUrl={post.descriptionUrl}
+                  usersId={post.userId}
                 />
               ))}
             </Posts>
@@ -103,7 +110,9 @@ const Box1 = styled.div`
   width: 50vw;
 `;
 
-const Box2 = styled.div``;
+const Box2 = styled.div`
+  margin-top: 170px;
+`;
 
 const Posts = styled.div`
   width: 611px;
@@ -139,10 +148,14 @@ const TimelineMainContent = styled.div`
 const TopUserInfo = styled.div`
   margin-top: 100px;
   max-height: 70px;
-  width: 800px;
+  width: 930px;
   padding-bottom: 41px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  .box1 {
+    display: flex;
+  }
 `;
 
 const Img = styled.img`

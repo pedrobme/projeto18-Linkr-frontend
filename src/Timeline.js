@@ -14,23 +14,27 @@ export default function Timeline() {
   const [userInfo, setUserInfo] = useState({});
   const [logoutVisibility, setLogoutVisibility] = useState(false);
 
-  console.log(logoutVisibility);
+  // console.log(logoutVisibility);
 
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
+
     const promisse = axios.get(`http://localhost:5000/timeline`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
+
 
     promisse.then((res) => {
       /* console.log(res.data); */
       setPosts(res.data);
       setLoad(false);
-      console.log(posts);
 
-      if (posts.length === 0) {
-        setPostNotifications(false);
+      console.log(res.data);
+
+
+      if (res.data.length === 0) {
+        setPostNotifications(true);
       }
     });
     promisse.catch((err) => {
@@ -39,7 +43,7 @@ export default function Timeline() {
         "An error occured while trying to fetch the posts, please refresh the page"
       );
     });
-  }, [postNotifications]);
+  }, []);
 
   return (
     <Container
@@ -62,6 +66,7 @@ export default function Timeline() {
               <a>There are no posts yet</a>
             </Notification>
             {posts.map((post) => (
+             
               <InfosPost
                 key={post.date}
                 posterId={post["user-id"]}
@@ -74,6 +79,7 @@ export default function Timeline() {
                 titleUrl={post.titleUrl}
                 imageUrl={post.imageUrl}
                 descriptionUrl={post.descriptionUrl}
+                usersId={post.usersId}
               />
             ))}
           </Posts>

@@ -21,6 +21,7 @@ export default function InfosPost({
   titleUrl,
   imageUrl,
   descriptionUrl,
+  usersId
 }) {
   const tagStyle = {
     fontWeight: 900,
@@ -30,6 +31,8 @@ export default function InfosPost({
   const [likes, setLikes] = useState([]);
   const [userId, setUserId] = useState(undefined);
   const [editingPost, setEditingPost] = useState(false);
+  const [postDelete, setPostDelete] = useState(false);
+
 
   const [editingPostText, setEditingPostText] = useState("");
   const navigate = useNavigate();
@@ -61,12 +64,14 @@ export default function InfosPost({
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
+
     const promisse = axios.get(`http://localhost:5000/postlikes/${newPostId}`, {
+
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
     promisse.then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setLikes(res.data.data);
       setUserId(res.data.userId);
 
@@ -91,7 +96,7 @@ export default function InfosPost({
     };
 
     if (!likeUser) {
-      const promisse = axios.post(`http://localhost:5000/liked`, object, {
+      const promisse = axios.post(`http://localhost:5001/liked`, object, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -109,7 +114,7 @@ export default function InfosPost({
       return;
     }
 
-    const promisse = axios.post(`http://localhost:5000/desliked`, object, {
+    const promisse = axios.post(`http://localhost:5001/desliked`, object, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -140,9 +145,8 @@ export default function InfosPost({
     } else if (!likeUser && likes.length == 2) {
       return `${likes[0].name} e ${likes[1].name} curtiram`;
     } else if (!likeUser && likes.length > 2) {
-      return `${likes[0].name}, ${likes[1].name} e outras ${
-        likes.length - 2
-      } pessoas`;
+      return `${likes[0].name}, ${likes[1].name} e outras ${likes.length - 2
+        } pessoas`;
     } else if (likeUser && likes.length > 2) {
       let name;
       for (let i = 0; i < likes.length; i++) {
@@ -158,6 +162,14 @@ export default function InfosPost({
 
   function editPost(event, postId, setEditingPost) {
     event.preventDeafault();
+  }
+
+  function openAsk(){
+    setPostDelete(true);
+  }
+
+  function noDeletePost(){
+    setPostDelete(false);
   }
 
   return (
@@ -193,11 +205,30 @@ export default function InfosPost({
                     : setEditingPost(true);
                 }}
               />{" "}
+
               <BsFillTrashFill
                 onClick={() => {
                   deletePost(newPostId);
                 }}
+
               />{" "}
+              <ScreeDelete postDelete ={postDelete}>
+
+              </ScreeDelete>
+              <AskDelete postDelete ={postDelete}>
+                <a>Are you sure you want to delete this post?</a>
+                <OptionYN>
+                  <NoDelete onClick={() => {
+                    noDeletePost();
+                  }}>No, go back</NoDelete>
+                  <YesDelete
+                  onClick={() => {
+                    deletePost(postId);
+                  }}
+                  >Yes, delete it</YesDelete>
+                </OptionYN>
+
+              </AskDelete>
             </Interactions>
           </PostHeader>
           {editingPost ? (
@@ -486,3 +517,76 @@ const ImageUrl = styled.div`
     border-bottom-right-radius: 10px;
   }
 `;
+
+const ScreeDelete = styled.div`
+display: ${(prop) => (prop.postDelete ? "initial" : "none")};
+height: 100%;
+width: 100%;
+position: fixed;
+top:0;
+left: 0;
+background-color: #ffffff;
+
+z-index: 100;
+opacity: 0.7;
+`
+
+const AskDelete = styled.div`
+
+height: 262px;
+width: 597px;
+opacity: 1;
+border-radius: 50px;
+position: fixed;
+left: 353px;
+top: 169px;
+background-color: #333333;
+z-index: 101;
+text-align: center;
+display: ${(prop) => (prop.postDelete ?  "flex" : "none")};
+flex-direction: column;
+justify-content: space-around;
+a{
+  font-family: "Lato", sans-serif;
+font-size: 34px;
+font-weight: 700;
+line-height: 41px;
+letter-spacing: 0em;
+}
+
+
+`
+const NoDelete = styled.div`
+height: 37px;
+width: 134px;
+border-radius: 5px;
+background-color: #ffffff;
+color: #1877F2;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor:pointer;
+`
+
+const YesDelete = styled.div`
+height: 37px;
+width: 134px;
+border-radius: 5px;
+background-color: #1877F2;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor:pointer;
+;
+`
+
+const OptionYN = styled.div`
+width: 300px;
+height: 45px;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+margin-left: 159px;
+
+
+`

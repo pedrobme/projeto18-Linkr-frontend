@@ -7,10 +7,10 @@ export default function TableTrending({ hashtagReload, setHashtagReload }) {
   const [hashtags, setHashtags] = useState([]);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/trending`);
+    const promisse = axios.get(`http://localhost:5001/trending`);
 
     promisse.then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setHashtags(res.data);
     });
     promisse.catch(() => console.log("Falha na requisição, tente novamente"));
@@ -32,7 +32,6 @@ export default function TableTrending({ hashtagReload, setHashtagReload }) {
 }
 
 const Affs = styled.div`
-  margin-top: 169px;
   height: 406px;
   width: 301px;
   background-color: #171717;
