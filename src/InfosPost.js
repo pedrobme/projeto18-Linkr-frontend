@@ -19,6 +19,7 @@ export default function InfosPost({
   titleUrl,
   imageUrl,
   descriptionUrl,
+  usersId
 }) {
   const tagStyle = {
     fontWeight: 900,
@@ -54,12 +55,12 @@ export default function InfosPost({
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/postlikes/${postId}`, {
+    const promisse = axios.get(`http://localhost:5001/postlikes/${postId}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
     promisse.then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setLikes(res.data.data);
       setUserId(res.data.userId);
 
@@ -84,7 +85,7 @@ export default function InfosPost({
     };
 
     if (!likeUser) {
-      const promisse = axios.post(`http://localhost:5000/liked`, object, {
+      const promisse = axios.post(`http://localhost:5001/liked`, object, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -101,7 +102,7 @@ export default function InfosPost({
       return;
     }
 
-    const promisse = axios.post(`http://localhost:5000/desliked`, object, {
+    const promisse = axios.post(`http://localhost:5001/desliked`, object, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -173,7 +174,7 @@ export default function InfosPost({
 
         <PostContent>
           <PostHeader>
-            <Link to={`/user/${userId}`}>
+            <Link to={`/user/${usersId}`}>
               <h1>{username}</h1>{" "}
             </Link>
             <Interactions>

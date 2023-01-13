@@ -4,7 +4,7 @@ const UserInfoContext = createContext();
 function UserInfoProvider({ children }) {
   const [userInfo, setUserInfo] = useState({});
   const [logoutVisibility, setLogoutVisibility] = useState(false);
-  console.log("userInfo: ", userInfo);
+  // console.log("userInfo: ", userInfo);
 
   return (
     <UserInfoContext.Provider
