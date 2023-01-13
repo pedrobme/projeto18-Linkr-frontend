@@ -3,8 +3,8 @@ import axios from "axios";
 
 export default function FollowComment({userId}){
     const authToken = localStorage.getItem("authToken");
-    const [followList, setFollowList] = useState([])
-    const [follow, setFollow] = useState(false)
+    const [followList2, setFollowList2] = useState([])
+    
 
     useEffect(()=> {
         const promisse = axios.get(`http://localhost:5001/followers/${userId}`, {
@@ -12,14 +12,13 @@ export default function FollowComment({userId}){
           });
 
         promisse.then((res) => {
-        console.log("mesma coisa")
+        console.log("comentario")
         console.log(res.data)
-        setFollowList(res.data)
+        setFollowList2(res.data)
         if(!res.data.length){
-            setFollow(false)
             return
         }
-        setFollow(true)
+        
         
     });
     promisse.catch((err) => {
@@ -28,9 +27,9 @@ export default function FollowComment({userId}){
         "An error occured while trying to fetch the posts, please refresh the page"
       );
     });
-    }, [follow])
+    }, [])
 
     return( 
-        <div>{userId === followList.followedId ? 'following' : ''}</div>
+        <div>{followList2.length > 0 ? 'following' : ''}</div>
     )
 } 
