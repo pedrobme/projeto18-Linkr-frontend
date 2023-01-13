@@ -33,11 +33,10 @@ export default function TableTrending({ hashtagReload, setHashtagReload }) {
 
 const Affs = styled.div`
   height: 406px;
-  width: 301px;
+  width: 100%;
   background-color: #171717;
   border-radius: 16px;
   padding-left: 16px;
-  margin-top: 10px;
 
   a {
     text-decoration: none;
@@ -71,6 +70,8 @@ const Affs = styled.div`
     font-size: 19px;
     line-height: 23px;
     letter-spacing: 0.05em;
+
+    word-wrap: break-word;
 
     color: #ffffff;
     margin-top: 18px;
