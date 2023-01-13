@@ -13,7 +13,7 @@ export default function AtualizationFeed({posts}) {
     setInterval(() => {
 
 
-        axios.get("http://localhost:5000/timeline").then((res) => {
+        axios.get("http://localhost:5001/timeline").then((res) => {
                 const oldPost = posts.length;
                 const newPosts = res.data.length;
                 
@@ -56,7 +56,7 @@ left: 241px;
 top: 481px;
 border-radius: 16px;
 background-color: #1877F2;
-display: ${(prop) => (prop.button === 0 ? "none" : )};
+display: ${(prop) => (prop.button === 0 ? "none" : "flex")};
 justify-content: center;
 align-items: center;
 margin-bottom: 17px;
