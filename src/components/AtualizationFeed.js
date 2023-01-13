@@ -56,7 +56,7 @@ left: 241px;
 top: 481px;
 border-radius: 16px;
 background-color: #1877F2;
-display: ${(prop) => (prop.button === 0 ? "none" : "flex")};
+display: ${(prop) => (prop.button === 0 ? "none" : )};
 justify-content: center;
 align-items: center;
 margin-bottom: 17px;
