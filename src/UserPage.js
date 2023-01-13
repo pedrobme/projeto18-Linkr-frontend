@@ -1,24 +1,25 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import UserInfosPost from "./UserInfosPost";
-import CreatePost from "./components/createPost";
 import UserTableTrending from "./components/UserTableTrending";
 import TopBar from "./components/TopBar";
+import InfosPost from "./InfosPost";
+import FollowButton from "./components/FollowButton";
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
   const { id } = useParams();
-  console.log("to no info", id);
+  console.log("deu refresh");
 
   useEffect(() => {
     const promisse = axios.get(`http://localhost:5001/user/${id}`);
 
     promisse.then((res) => {
-      /* console.log(res.data); */
+      console.log("resUserPage: ", res.data);
+
       setPosts(res.data);
       setLoad(false);
 
@@ -26,12 +27,13 @@ export default function Timeline() {
         setPostNotifications(false);
       }
     });
+
     promisse.catch(() =>
       alert(
         "An error occured while trying to fetch the posts, please refresh the page"
       )
     );
-  }, [postNotifications]);
+  }, [postNotifications, id]);
 
   // console.log("dados vindo do back =>", id, Posts);
 
@@ -42,10 +44,14 @@ export default function Timeline() {
       <ContainerTimeLine>
         <TimelineMainContent>
           <TopUserInfo>
-            <Img src={posts.length > 0 ? posts[0].image : ""} />
-            <TimelineTitle>
-              {posts.length > 0 ? posts[0].username : ""}
-            </TimelineTitle>
+            <div className="box1">
+              <Img src={posts.length > 0 ? posts[0].image : ""} />
+              <TimelineTitle>
+                {posts.length > 0 ? posts[0].username : ""}
+              </TimelineTitle>
+            </div>
+
+            <FollowButton userId={id} />
           </TopUserInfo>
           <Box1>
             <LoadingPost load={load}>
@@ -56,10 +62,13 @@ export default function Timeline() {
                 <a>There are no posts yet</a>
               </Notification>
               {posts.map((post) => (
-                <UserInfosPost
-                  key={post.id}
-                  postId={post.id}
-                  username={post.username}
+                <InfosPost
+                  key={post.date}
+                  posterId={post["user-id"]}
+                  postId={post["post-id"]}
+                  repostId={post["repost-id"]}
+                  repostedPostId={post["reposted-post-id"]}
+                  posterUsername={post["post-creator-name"]}
                   image={post.image}
                   url={post.url}
                   message={post.text}
@@ -99,7 +108,9 @@ const Box1 = styled.div`
   width: 50vw;
 `;
 
-const Box2 = styled.div``;
+const Box2 = styled.div`
+  margin-top: 220px;
+`;
 
 const Posts = styled.div`
   width: 611px;
@@ -135,10 +146,14 @@ const TimelineMainContent = styled.div`
 const TopUserInfo = styled.div`
   margin-top: 100px;
   max-height: 70px;
-  width: 800px;
+  width: 930px;
   padding-bottom: 41px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  .box1 {
+    display: flex;
+  }
 `;
 
 const Img = styled.img`
