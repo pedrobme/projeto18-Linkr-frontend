@@ -8,6 +8,7 @@ import { ReactTagify } from "react-tagify";
 import axios from "axios";
 import deletePost from "./utils/deletePost";
 import {CiLocationArrow1} from "react-icons/ci";
+import FollowComment from "./components/FollowComent";
 
 export default function InfosPost({
   posterId,
@@ -330,7 +331,7 @@ export default function InfosPost({
                 <div>
                   <p>{comm.userName}</p> 
                   <p>{comm.userName === username ? '• post’s author' : ''}</p>
-                  <p></p>
+                  <FollowComment userId={comm.userId}></FollowComment>
                 </div> 
                 <p>{comm.commentText}</p>
               </UserComments>
