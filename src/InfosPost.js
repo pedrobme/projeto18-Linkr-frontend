@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
 import deletePost from "./utils/deletePost";
+import {CiLocationArrow1} from "react-icons/ci";
 
 export default function InfosPost({
   postId,
@@ -29,9 +30,40 @@ export default function InfosPost({
   const [likes, setLikes] = useState([]);
   const [userId, setUserId] = useState(undefined);
   const [editingPost, setEditingPost] = useState(false);
+  const[comment, setComment] = useState(false);
+  const[count, setCount] = useState(false);
+  const [isShown, setIsShown] = useState(false);
+  const[commentUser, setCommentUser] = useState("");
 
   const [editingPostText, setEditingPostText] = useState("");
   const navigate = useNavigate();
+
+  function sendComments(event){
+    event.preventDefault();
+    const request = axios.post(`http://localhost:4000/comment`, {
+      comment:commentUser,
+      userId:count.id,
+      postId:postId,
+    });
+    request.then((response) => {
+      console.log(response.data);
+    });
+    request.catch((error) => {
+      console.log(error);
+    })
+  }
+
+  const handleClick = event => {
+    // 👇️ toggle shown state
+    setIsShown(current => !current);
+
+    // 👇️ or simply set it to true
+    // setIsShown(true);
+  };
+
+
+
+
 
   function redirectHash(m) {
     let newTag = "";
@@ -55,7 +87,7 @@ export default function InfosPost({
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5001/postlikes/${postId}`, {
+    const promisse = axios.get(`http://localhost:4000/postlikes/${postId}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -79,13 +111,26 @@ export default function InfosPost({
     });
   }, [likeUser]);
 
+
+  useEffect(() => {
+    const promis = axios.get(`http://localhost:4000/comment/${postId}`);
+
+    promis.then((res) => {
+      setCount(res.data)
+      setComment(res.data.rows);
+      console.log(res.data)
+    })
+  },[])
+
+
+
   function liked() {
     const object = {
       postId: postId,
     };
 
     if (!likeUser) {
-      const promisse = axios.post(`http://localhost:5001/liked`, object, {
+      const promisse = axios.post(`http://localhost:4000/liked`, object, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -102,7 +147,7 @@ export default function InfosPost({
       return;
     }
 
-    const promisse = axios.post(`http://localhost:5001/desliked`, object, {
+    const promisse = axios.post(`http://localhost:4000/desliked`, object, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -222,9 +267,172 @@ export default function InfosPost({
           </UrlMetadata>
         </PostContent>
       </PostBox>
+      {isShown && (
+              <><AllComents>
+
+          {comment.map((comm) => <>
+            <AllComentsPostId>
+              <ImageComment src={comm.userImage} />
+              <UserComments key={postId}>
+                <div>
+                  <p>{comm.userName}</p> 
+                  <p>{comm.userName === username ? '• post’s author' : ''}</p>
+                </div> 
+                <p>{comm.commentText}</p>
+              </UserComments>
+
+
+            </AllComentsPostId>
+
+          </>
+          )}
+          <SendComment>
+            <ImageUser src={count.imageMain} alt="imageUser"/>
+            <input
+              type="text"
+              placeholder="Write a comment"
+              value={commentUser}
+              onChange={(e) => setCommentUser(e.target.value)}
+            ></input>
+            <CiLocationArrow1 size={40} color="white" onClick={sendComments}/>
+          </SendComment>
+        </AllComents>
+        </>
+        )}
     </>
   );
 }
+
+const ImageUser = styled.img`
+  width: 39px;
+  height: 39px;
+  border-radius: 26.5px;
+
+`
+const SendComment = styled.div`
+  display:flex;
+  input{
+    width: 514px;
+    height: 39px;
+    margin-left:14px;
+    background: #252525;
+    border-radius: 8px;
+    padding-left:14px;
+    border:none
+  }
+  input::placeholder{
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: #575757; 
+  }
+  
+ 
+  padding-top:40px;
+  padding-left:25px;
+  padding-bottom:25px;
+  
+
+
+`
+const AllComents = styled.div`
+  display:flex;
+  flex-direction:column;
+  width: 720px;
+  background: #1E1E1E;
+  border-radius: 16px;
+  margin-top:-30px;
+  margin-bottom:44px;
+  padding-botton:25px;
+ 
+  
+`
+const ImageComment = styled.img`
+  width: 39px;
+  height: 39px;
+  border-radius: 26.5px;
+  margin-top:4px;
+
+`
+const AllComentsPostId = styled.div`
+  display:flex;
+  flex-direction:row;
+  margin-top:20px;
+  padding-top:20px;
+  padding-left:25px;
+`
+const UserComments = styled.div`
+    display:flex;
+    flex-direction:column;
+    margin-left:18px;
+    div{
+      display:flex;
+      flex-direction:column;
+      color: #F3F3F3;
+      font-size: 14px;
+      flex-direction:row;
+    };
+    div p:nth-child(1){
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: #F3F3F3;
+    };
+    div p:nth-child(2){
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: #565656;
+      margin-left:4px;
+      margin-top:1px;
+    }
+    p{
+      color: #ACACAC;
+      margin-top:3px;
+      font-size: 14px;
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+
+    };
+`
+const ViewComments = styled.div`
+  flex-direction:column;
+  img{
+    margin-left:26px;
+    padding-top:13px;
+  }
+`
+
+const ViewComment = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  p{
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 11px;
+      line-height: 13px;
+      align-items: center;
+      justify-content: center;
+  }
+  p:nth-child(2){
+    margin-left:5px;
+  }
+`
+
+
+
 
 const PostBox = styled.form`
   color: #ffffff;

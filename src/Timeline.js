@@ -19,7 +19,7 @@ export default function Timeline() {
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5001/timeline`);
+    const promisse = axios.get(`http://localhost:4000/timeline`);
 
     promisse.then((res) => {
       /* console.log(res.data); */
