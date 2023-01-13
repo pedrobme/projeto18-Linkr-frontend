@@ -15,7 +15,7 @@ export default function Timeline() {
   console.log("deu refresh");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5001/user/${id}`);
+    const promisse = axios.get(`http://localhost:5000/user/${id}`);
 
     promisse.then((res) => {
       console.log("resUserPage: ", res.data);

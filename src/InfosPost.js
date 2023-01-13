@@ -46,14 +46,14 @@ export default function InfosPost({
   const [isRepost, setIsRepost] = useState(false);
 
   const [commentSent, setCommentSent] = useState(false);
-  console.log(commentSent);
+  /* console.log(commentSent); */
 
   const [editingPostText, setEditingPostText] = useState("");
 
   const navigate = useNavigate();
 
   function sendComments() {
-    const request = axios.post(`http://localhost:5001/comment`, {
+    const request = axios.post(`http://localhost:5000/comment`, {
       comment: commentUser,
       userId: count.id,
       postId: postId,
@@ -108,12 +108,12 @@ export default function InfosPost({
       setIsRepost(true);
     }
 
-    const promisse = axios.get(`http://localhost:5001/postlikes/${newPostId}`, {
+    const promisse = axios.get(`http://localhost:5000/postlikes/${newPostId}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
     promisse.then((res) => {
-      // console.log(res.data);
+      /* console.log(res.data); */
       setLikes(res.data.data);
       setUserId(res.data.userId);
 
@@ -133,12 +133,12 @@ export default function InfosPost({
   }, [likeUser]);
 
   useEffect(() => {
-    const promis = axios.get(`http://localhost:5001/comment/${postId}`);
+    const promis = axios.get(`http://localhost:5000/comment/${postId}`);
 
     promis.then((res) => {
       setCount(res.data);
       setComment(res.data.rows);
-      console.log(res.data);
+      /* console.log(res.data); */
     });
   }, [commentSent]);
 
@@ -148,7 +148,7 @@ export default function InfosPost({
     };
 
     if (!likeUser) {
-      const promisse = axios.post(`http://localhost:5001/liked`, object, {
+      const promisse = axios.post(`http://localhost:5000/liked`, object, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -166,7 +166,7 @@ export default function InfosPost({
       return;
     }
 
-    const promisse = axios.post(`http://localhost:5001/desliked`, object, {
+    const promisse = axios.post(`http://localhost:5000/desliked`, object, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -287,7 +287,7 @@ export default function InfosPost({
               />{" "}
               <BsFillTrashFill
                 onClick={() => {
-                  deletePost(newPostId);
+                  openAsk();
                 }}
               />{" "}
               <ScreeDelete postDelete={postDelete}></ScreeDelete>
@@ -378,6 +378,7 @@ export default function InfosPost({
               />
             </SendComment>
           </AllComents>
+          
         </>
       )}
     </>
@@ -537,7 +538,7 @@ const PostBox = styled.form`
   width: 100%;
 
   border-radius: 16px;
-  background-color: ${(props) => (props.isRepost ? "#505050" : "#171717")};
+  background-color: ${(props) => (props.isRepost ? "#ffffff" : "#171717")};
   margin-bottom: 16px;
 
   display: flex;
