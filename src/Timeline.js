@@ -6,15 +6,16 @@ import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
+import AtualizationFeed from "./components/AtualizationFeed";
 
 export default function Timeline() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
   const [userInfo, setUserInfo] = useState({});
   const [logoutVisibility, setLogoutVisibility] = useState(false);
 
-  console.log(logoutVisibility);
+  /* console.log(logoutVisibility); */
 
   const authToken = localStorage.getItem("authToken");
 
@@ -22,10 +23,10 @@ export default function Timeline() {
     const promisse = axios.get(`http://localhost:5000/timeline`);
 
     promisse.then((res) => {
-      /* console.log(res.data); */
+      console.log(res.data);
       setPosts(res.data);
       setLoad(false);
-      console.log(res.data);
+      /* console.log(res.data); */
 
       if (res.data.length === 0) {
         setPostNotifications(true);
@@ -38,7 +39,7 @@ export default function Timeline() {
       );
     });
   }, []);
-
+  
   return (
     <Container
       onClick={() => {
@@ -51,15 +52,18 @@ export default function Timeline() {
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
         <Box1>
+          
+          <Posts>
           <CreatePost userInfo={userInfo} />
+          
           <LoadingPost load={load}>
             <a>Loading...</a>
           </LoadingPost>
-          <Posts>
+          <AtualizationFeed posts={posts}/>
             <Notification postNotifications={postNotifications}>
               <a>There are no posts yet</a>
             </Notification>
-            {posts.map((post) => (
+            { posts === null ? <></> : posts.map((post) => (
               <InfosPost
                 key={post.id}
                 postId={post.id}

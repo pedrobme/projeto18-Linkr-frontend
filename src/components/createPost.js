@@ -64,8 +64,8 @@ const CreatePost = () => {
 // Styled components
 
 const CreatePostBackground = styled.div`
-  margin-top: 50px;
-  width: 611px;
+  
+  width: 100%;
   height: 209px;
 
   background-color: white;
@@ -76,6 +76,8 @@ const CreatePostBackground = styled.div`
 
   padding-inline: 18px;
   padding-block: 16px;
+
+  margin-bottom: 40px;
 `;
 
 const MainContentForm = styled.form`
