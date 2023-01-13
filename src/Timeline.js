@@ -19,7 +19,9 @@ export default function Timeline() {
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/timeline`);
+    const promisse = axios.get(`http://localhost:5000/timeline`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
 
     promisse.then((res) => {
       /* console.log(res.data); */
@@ -61,8 +63,10 @@ export default function Timeline() {
             </Notification>
             {posts.map((post) => (
               <InfosPost
-                key={post.id}
-                postId={post.id}
+                key={post.date}
+                posterId={post["user-id"]}
+                postId={post["post-id"]}
+                repostId={post["repost-id"]}
                 username={post.username}
                 image={post.image}
                 url={post.url}
