@@ -40,7 +40,7 @@ export default function InfosPost({
 
   function sendComments(event){
     event.preventDefault();
-    const request = axios.post(`http://localhost:4000/comment`, {
+    const request = axios.post(`http://localhost:5001/comment`, {
       comment:commentUser,
       userId:count.id,
       postId:postId,
@@ -87,7 +87,7 @@ export default function InfosPost({
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:4000/postlikes/${postId}`, {
+    const promisse = axios.get(`http://localhost:5001/postlikes/${postId}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -113,7 +113,7 @@ export default function InfosPost({
 
 
   useEffect(() => {
-    const promis = axios.get(`http://localhost:4000/comment/${postId}`);
+    const promis = axios.get(`http://localhost:5001/comment/${postId}`);
 
     promis.then((res) => {
       setCount(res.data)
@@ -130,7 +130,7 @@ export default function InfosPost({
     };
 
     if (!likeUser) {
-      const promisse = axios.post(`http://localhost:4000/liked`, object, {
+      const promisse = axios.post(`http://localhost:5001/liked`, object, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -147,7 +147,7 @@ export default function InfosPost({
       return;
     }
 
-    const promisse = axios.post(`http://localhost:4000/desliked`, object, {
+    const promisse = axios.post(`http://localhost:5001/desliked`, object, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -215,7 +215,15 @@ export default function InfosPost({
             <a>{likes.length} likes</a>
             <div className="hover">{personLiked()}</div>
           </LikePost>
+          <ViewComments>
+              <img src="Vector.png" onClick={handleClick}/>
+              <ViewComment>
+              <p key={postId}>{count.rowCount}</p>
+              <p >comments</p>
+            </ViewComment>
+          </ViewComments>
         </LeftPannel>
+        
 
         <PostContent>
           <PostHeader>
@@ -302,6 +310,7 @@ export default function InfosPost({
     </>
   );
 }
+
 
 const ImageUser = styled.img`
   width: 39px;

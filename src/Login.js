@@ -25,7 +25,7 @@ export default function Login() {
 
   const getUserInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/timeline/me", {
+      const response = await axios.get("http://localhost:5001/timeline/me", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },

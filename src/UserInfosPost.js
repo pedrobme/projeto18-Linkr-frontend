@@ -57,7 +57,7 @@ export default function InfosPost({
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:4000/postlikes/${postId}`, {
+    const promisse = axios.get(`http://localhost:5001/postlikes/${postId}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
