@@ -15,7 +15,7 @@ export default function HashtagPage() {
   const [hashtagReload, setHashtagReload] = useState("");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/hashtag/${hashtag}`);
+    const promisse = axios.get(`https://linker-api-4331.onrender.com/hashtag/${hashtag}`);
 
     promisse.then((res) => {
       /* console.log(res.data); */

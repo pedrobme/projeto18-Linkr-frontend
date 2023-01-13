@@ -24,7 +24,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/publish`,
+        `https://linker-api-4331.onrender.com/publish`,
         publishPostObject,
         {
           headers: { Authorization: `Bearer ${authToken}` },

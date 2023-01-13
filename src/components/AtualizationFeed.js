@@ -14,7 +14,7 @@ export default function AtualizationFeed({posts}) {
     setInterval(() => {
 
 
-        const promisse = axios.get(`http://localhost:5000/timeline`, {
+        const promisse = axios.get(`https://linker-api-4331.onrender.com/timeline`, {
       headers: { Authorization: `Bearer ${authToken}` },
     }).then((res) => {
                 const oldPost = posts.length;
