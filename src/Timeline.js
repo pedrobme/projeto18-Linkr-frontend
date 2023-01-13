@@ -167,7 +167,7 @@ const TimelineTitle = styled.h3`
                 `;
 
 const Posts = styled.div`
-background-color: blue;
+
 
                 margin-top: 29px;
                 display: flex;
