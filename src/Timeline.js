@@ -19,16 +19,22 @@ export default function Timeline() {
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5001/timeline`);
+
+    const promisse = axios.get(`http://localhost:5000/timeline`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
 
     promisse.then((res) => {
       /* console.log(res.data); */
       setPosts(res.data);
       setLoad(false);
-      // console.log(posts);
 
-      if (posts.length === 0) {
-        setPostNotifications(false);
+      console.log(res.data);
+
+
+      if (res.data.length === 0) {
+        setPostNotifications(true);
       }
     });
     promisse.catch((err) => {
@@ -37,7 +43,7 @@ export default function Timeline() {
         "An error occured while trying to fetch the posts, please refresh the page"
       );
     });
-  }, [postNotifications]);
+  }, []);
 
   return (
     <Container
@@ -62,8 +68,10 @@ export default function Timeline() {
             {posts.map((post) => (
              
               <InfosPost
-                key={post.id}
-                postId={post.id}
+                key={post.date}
+                posterId={post["user-id"]}
+                postId={post["post-id"]}
+                repostId={post["repost-id"]}
                 username={post.username}
                 image={post.image}
                 url={post.url}
