@@ -8,12 +8,15 @@ export default function AtualizationFeed({posts}) {
     console.log(posts)
 
     const [button, setButton] = useState(0);
+    const authToken = localStorage.getItem("authToken");
     
 
     setInterval(() => {
 
 
-        axios.get("http://localhost:5001/timeline").then((res) => {
+        const promisse = axios.get(`http://localhost:5000/timeline`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    }).then((res) => {
                 const oldPost = posts.length;
                 const newPosts = res.data.length;
                 

@@ -7,7 +7,7 @@ export default function FollowComment({userId}){
     const [follow, setFollow] = useState(false)
 
     useEffect(()=> {
-        const promisse = axios.get(`http://localhost:5001/followers/${userId}`, {
+        const promisse = axios.get(`http://localhost:5000/followers/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           });
 
