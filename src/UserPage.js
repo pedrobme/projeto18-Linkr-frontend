@@ -105,7 +105,7 @@ const Box1 = styled.div`
 `;
 
 const Box2 = styled.div`
-  margin-top: 170px;
+  margin-top: 220px;
 `;
 
 const Posts = styled.div`

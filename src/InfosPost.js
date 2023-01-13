@@ -34,9 +34,15 @@ export default function InfosPost({
   const[count, setCount] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const[commentUser, setCommentUser] = useState("");
+  
 
   const [editingPostText, setEditingPostText] = useState("");
   const navigate = useNavigate();
+
+
+
+
+
 
   function sendComments(event){
     event.preventDefault();
@@ -285,6 +291,7 @@ export default function InfosPost({
                 <div>
                   <p>{comm.userName}</p> 
                   <p>{comm.userName === username ? '• post’s author' : ''}</p>
+                  <p></p>
                 </div> 
                 <p>{comm.commentText}</p>
               </UserComments>
