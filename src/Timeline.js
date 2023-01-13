@@ -1,24 +1,37 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import InfosPost from "./InfosPost";
 import CreatePost from "./components/createPost";
 import TableTrending from "./components/TableTrending";
 import TopBar from "./components/TopBar";
+import { getUserInfo } from "./utils/getUserInfo";
+import { UserInfoContext } from "./userInfo";
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
-  const [userInfo, setUserInfo] = useState({});
   const [logoutVisibility, setLogoutVisibility] = useState(false);
+
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
+  console.log("userinfo", userInfo);
 
   // console.log(logoutVisibility);
 
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
+    const refreshUserInfo = async () => {
+      const userInfo = await getUserInfo();
+
+      setUserInfo(userInfo);
+    };
+
+    refreshUserInfo();
+
     const promisse = axios.get(`http://localhost:5001/timeline`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
@@ -54,7 +67,7 @@ export default function Timeline() {
       <TimelineTitle>Timeline</TimelineTitle>
       <TimelineMainContent>
         <Box1>
-          <CreatePost userInfo={userInfo} />
+          <CreatePost />
           <LoadingPost load={load}>
             <a>Loading...</a>
           </LoadingPost>

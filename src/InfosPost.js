@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineComment, AiOutlineHeart } from "react-icons/ai";
+import { BiRepost } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
@@ -240,12 +241,16 @@ export default function InfosPost({
             <div className="hover">{personLiked()}</div>
           </LikePost>
           <ViewComments>
-            <img src="Vector.png" onClick={handleClick} />
+            <AiOutlineComment onClick={handleClick} />
             <ViewComment>
               <p key={postId}>{count.rowCount}</p>
               <p>comments</p>
             </ViewComment>
           </ViewComments>
+          <RepostDiv>
+            <BiRepost />
+            <p>10 re-posts</p>
+          </RepostDiv>
         </LeftPannel>
 
         <PostContent>
@@ -455,17 +460,18 @@ const UserComments = styled.div`
   }
 `;
 const ViewComments = styled.div`
+  display: flex;
   flex-direction: column;
-  img {
-    margin-left: 26px;
-    padding-top: 13px;
-  }
+
+  align-items: center;
 `;
 
 const ViewComment = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+
   align-items: center;
+
   p {
     font-family: "Lato";
     font-style: normal;
@@ -480,22 +486,59 @@ const ViewComment = styled.div`
   }
 `;
 
+const RepostDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+
+    text-align: center;
+  }
+`;
+
 const PostBox = styled.form`
   color: #ffffff;
 
-  min-height: 276px;
+  height: 280px;
   width: 100%;
 
   border-radius: 16px;
   background-color: ${(props) => (props.isRepost ? "#505050" : "#171717")};
   margin-bottom: 16px;
+
   display: flex;
+
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const LeftPannel = styled.div``;
+const LeftPannel = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: space-around;
+
+  height: 100%;
+
+  width: 15%;
+
+  padding-bottom: 10px;
+  svg {
+    font-size: 25px;
+  }
+`;
 
 const UserPhoto = styled.div`
-  width: 10%;
   img {
     height: 50px;
     width: 50px;
@@ -531,15 +574,11 @@ const LikePost = styled.div`
       justify-content: center;
     }
   }
-  width: 10%;
 
-  height: 80px;
-  margin-top: 19px;
-  margin-left: 33px;
-  margin-bottom: 4.01px;
+  height: 50px;
 
   display: flex;
-  flex-wrap: wrap;
+
   flex-direction: column;
   .hover {
     display: none;
@@ -551,24 +590,21 @@ const LikePost = styled.div`
   line-height: 13px;
 
   a {
-    margin-top: 9px;
-    margin-left: -4px;
     font-family: "Lato";
     font-style: normal;
     font-weight: 700;
     font-size: 11px;
-    line-height: 13px;
-    align-items: center;
-    justify-content: center;
   }
 `;
 
 const PostContent = styled.div`
-  width: 85%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  margin-top: 19px;
 `;
 
 const PostHeader = styled.div`
