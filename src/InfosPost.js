@@ -9,6 +9,8 @@ import axios from "axios";
 import deletePost from "./utils/deletePost";
 import { CiLocationArrow1 } from "react-icons/ci";
 import FollowComment from "./components/FollowComent";
+import { BiGroup } from "react-icons/bi";
+
 
 export default function InfosPost({
   posterId,
@@ -240,8 +242,9 @@ export default function InfosPost({
             <div className="hover">{personLiked()}</div>
           </LikePost>
           <ViewComments>
-            <img src="Vector.png" onClick={handleClick} />
+            <BiGroup size={30} style={{marginLeft:20}}/>
             <ViewComment>
+
               <p key={postId}>{count.rowCount}</p>
               <p>comments</p>
             </ViewComment>
