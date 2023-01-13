@@ -54,7 +54,7 @@ export default function HashtagPage() {
                   postId={post.id}
                   setHashtagReload={setHashtagReload}
                   key={post.id}
-                  username={post.username}
+                  posterUsername={post["post-creator-name"]}
                   image={post.image}
                   url={post.url}
                   message={post.text}

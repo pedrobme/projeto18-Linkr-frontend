@@ -1,14 +1,11 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import UserInfosPost from "./UserInfosPost";
-import CreatePost from "./components/createPost";
 import UserTableTrending from "./components/UserTableTrending";
 import TopBar from "./components/TopBar";
 import InfosPost from "./InfosPost";
 import FollowButton from "./components/FollowButton";
-
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
@@ -53,8 +50,8 @@ export default function Timeline() {
                 {posts.length > 0 ? posts[0].username : ""}
               </TimelineTitle>
             </div>
-            
-            <FollowButton userId={id}/>
+
+            <FollowButton userId={id} />
           </TopUserInfo>
           <Box1>
             <LoadingPost load={load}>
@@ -70,7 +67,8 @@ export default function Timeline() {
                   posterId={post["user-id"]}
                   postId={post["post-id"]}
                   repostId={post["repost-id"]}
-                  username={post.username}
+                  repostedPostId={post["reposted-post-id"]}
+                  posterUsername={post["post-creator-name"]}
                   image={post.image}
                   url={post.url}
                   message={post.text}

@@ -19,11 +19,9 @@ export default function Timeline() {
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-
-    const promisse = axios.get(`http://localhost:5000/timeline`, {
+    const promisse = axios.get(`http://localhost:5001/timeline`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
-
 
     promisse.then((res) => {
       /* console.log(res.data); */
@@ -31,7 +29,6 @@ export default function Timeline() {
       setLoad(false);
 
       console.log(res.data);
-
 
       if (res.data.length === 0) {
         setPostNotifications(true);
@@ -66,13 +63,13 @@ export default function Timeline() {
               <a>There are no posts yet</a>
             </Notification>
             {posts.map((post) => (
-             
               <InfosPost
                 key={post.date}
                 posterId={post["user-id"]}
+                posterUsername={post["post-creator-name"]}
                 postId={post["post-id"]}
                 repostId={post["repost-id"]}
-                username={post.username}
+                repostedPostId={post["reposted-post-id"]}
                 image={post.image}
                 url={post.url}
                 message={post.text}
