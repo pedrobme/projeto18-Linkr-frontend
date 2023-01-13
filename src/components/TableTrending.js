@@ -37,7 +37,7 @@ const Affs = styled.div`
   background-color: #171717;
   border-radius: 16px;
   padding-left: 16px;
-  padding-top: 10px;
+  margin-top: 10px;
 
   a {
     text-decoration: none;

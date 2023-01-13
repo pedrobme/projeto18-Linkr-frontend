@@ -7,19 +7,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import axios from "axios";
 import deletePost from "./utils/deletePost";
+import { CiLocationArrow1 } from "react-icons/ci";
+import FollowComment from "./components/FollowComent";
 
 export default function InfosPost({
+  posterId,
+  posterUsername,
   postId,
   setHashtagReload,
+  repostId,
+  repostedPostId,
   postNotifications,
-  username,
   image,
   message,
   url,
   titleUrl,
   imageUrl,
   descriptionUrl,
-  usersId
+  usersId,
 }) {
   const tagStyle = {
     fontWeight: 900,
@@ -29,10 +34,50 @@ export default function InfosPost({
   const [likes, setLikes] = useState([]);
   const [userId, setUserId] = useState(undefined);
   const [editingPost, setEditingPost] = useState(false);
-  
+  const [comment, setComment] = useState(false);
+  const [count, setCount] = useState(false);
+  const [isShown, setIsShown] = useState(false);
+  const [commentUser, setCommentUser] = useState("");
+
+  const [postDelete, setPostDelete] = useState(false);
+  const [isRepost, setIsRepost] = useState(false);
+
+  const [commentSent, setCommentSent] = useState(false);
+  console.log(commentSent);
 
   const [editingPostText, setEditingPostText] = useState("");
+
   const navigate = useNavigate();
+
+  function sendComments() {
+    const request = axios.post(`http://localhost:5001/comment`, {
+      comment: commentUser,
+      userId: count.id,
+      postId: postId,
+    });
+
+    setCommentSent(!commentSent);
+
+    request.then((response) => {
+      console.log(response.data);
+    });
+    request.catch((error) => {
+      console.log(error);
+    });
+  }
+
+  const handleClick = (event) => {
+    // 👇️ toggle shown state
+    setIsShown((current) => !current);
+
+    // 👇️ or simply set it to true
+    // setIsShown(true);
+  };
+
+  let newPostId = postId;
+  if (newPostId === null) {
+    newPostId = repostedPostId;
+  }
 
   function redirectHash(m) {
     let newTag = "";
@@ -56,7 +101,11 @@ export default function InfosPost({
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5001/postlikes/${postId}`, {
+    if (repostedPostId != null) {
+      setIsRepost(true);
+    }
+
+    const promisse = axios.get(`http://localhost:5001/postlikes/${newPostId}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -80,9 +129,19 @@ export default function InfosPost({
     });
   }, [likeUser]);
 
+  useEffect(() => {
+    const promis = axios.get(`http://localhost:5001/comment/${postId}`);
+
+    promis.then((res) => {
+      setCount(res.data);
+      setComment(res.data.rows);
+      console.log(res.data);
+    });
+  }, [commentSent]);
+
   function liked() {
     const object = {
-      postId: postId,
+      postId: newPostId,
     };
 
     if (!likeUser) {
@@ -94,6 +153,7 @@ export default function InfosPost({
         console.log(res);
         setLikeUser(true);
       });
+
       promisse.catch((err) => {
         console.log(err);
         alert(
@@ -154,9 +214,17 @@ export default function InfosPost({
     event.preventDeafault();
   }
 
+  function openAsk() {
+    setPostDelete(true);
+  }
+
+  function noDeletePost() {
+    setPostDelete(false);
+  }
+
   return (
     <>
-      <PostBox username={username}>
+      <PostBox isRepost={isRepost} username={posterUsername}>
         <LeftPannel>
           <UserPhoto>
             <img src={image}></img>
@@ -171,12 +239,19 @@ export default function InfosPost({
             <a>{likes.length} likes</a>
             <div className="hover">{personLiked()}</div>
           </LikePost>
+          <ViewComments>
+            <img src="Vector.png" onClick={handleClick} />
+            <ViewComment>
+              <p key={postId}>{count.rowCount}</p>
+              <p>comments</p>
+            </ViewComment>
+          </ViewComments>
         </LeftPannel>
 
         <PostContent>
           <PostHeader>
-            <Link to={`/user/${usersId}`}>
-              <h1>{username}</h1>{" "}
+            <Link to={`/user/${posterId}`}>
+              <h1>{posterUsername}</h1>{" "}
             </Link>
             <Interactions>
               {" "}
@@ -189,9 +264,29 @@ export default function InfosPost({
               />{" "}
               <BsFillTrashFill
                 onClick={() => {
-                  deletePost(postId);
+                  deletePost(newPostId);
                 }}
               />{" "}
+              <ScreeDelete postDelete={postDelete}></ScreeDelete>
+              <AskDelete postDelete={postDelete}>
+                <a>Are you sure you want to delete this post?</a>
+                <OptionYN>
+                  <NoDelete
+                    onClick={() => {
+                      noDeletePost();
+                    }}
+                  >
+                    No, go back
+                  </NoDelete>
+                  <YesDelete
+                    onClick={() => {
+                      deletePost(postId);
+                    }}
+                  >
+                    Yes, delete it
+                  </YesDelete>
+                </OptionYN>
+              </AskDelete>
             </Interactions>
           </PostHeader>
           {editingPost ? (
@@ -223,9 +318,167 @@ export default function InfosPost({
           </UrlMetadata>
         </PostContent>
       </PostBox>
+      {isShown && (
+        <>
+          <AllComents>
+            {comment.map((comm) => (
+              <>
+                <AllComentsPostId>
+                  <ImageComment src={comm.userImage} />
+                  <UserComments key={postId}>
+                    <div>
+                      <p>{comm.userName}</p>
+                      <p>
+                        {comm.userName === posterUsername
+                          ? "• post’s author"
+                          : ""}
+                      </p>
+                      <FollowComment userId={comm.userId}></FollowComment>
+                    </div>
+                    <p>{comm.commentText}</p>
+                  </UserComments>
+                </AllComentsPostId>
+              </>
+            ))}
+            <SendComment>
+              <ImageUser src={count.imageMain} alt="imageUser" />
+              <input
+                type="text"
+                placeholder="Write a comment"
+                value={commentUser}
+                onChange={(e) => setCommentUser(e.target.value)}
+              ></input>
+              <CiLocationArrow1
+                size={40}
+                color="white"
+                onClick={() => sendComments()}
+              />
+            </SendComment>
+          </AllComents>
+        </>
+      )}
     </>
   );
 }
+
+const ImageUser = styled.img`
+  width: 39px;
+  height: 39px;
+  border-radius: 26.5px;
+`;
+const SendComment = styled.div`
+  display: flex;
+  input {
+    width: 514px;
+    height: 39px;
+    margin-left: 14px;
+    background: #252525;
+    border-radius: 8px;
+    padding-left: 14px;
+    border: none;
+  }
+  input::placeholder {
+    font-family: "Lato";
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: #575757;
+  }
+
+  padding-top: 40px;
+  padding-left: 25px;
+  padding-bottom: 25px;
+`;
+const AllComents = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 720px;
+  background: #1e1e1e;
+  border-radius: 16px;
+  margin-top: -30px;
+  margin-bottom: 44px;
+  padding-bottom: 25px;
+`;
+const ImageComment = styled.img`
+  width: 39px;
+  height: 39px;
+  border-radius: 26.5px;
+  margin-top: 4px;
+`;
+const AllComentsPostId = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-left: 25px;
+`;
+const UserComments = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 18px;
+  div {
+    display: flex;
+    flex-direction: column;
+    color: #f3f3f3;
+    font-size: 14px;
+    flex-direction: row;
+  }
+  div p:nth-child(1) {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #f3f3f3;
+  }
+  div p:nth-child(2) {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #565656;
+    margin-left: 4px;
+    margin-top: 1px;
+  }
+  p {
+    color: #acacac;
+    margin-top: 3px;
+    font-size: 14px;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+  }
+`;
+const ViewComments = styled.div`
+  flex-direction: column;
+  img {
+    margin-left: 26px;
+    padding-top: 13px;
+  }
+`;
+
+const ViewComment = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+    align-items: center;
+    justify-content: center;
+  }
+  p:nth-child(2) {
+    margin-left: 5px;
+  }
+`;
 
 const PostBox = styled.form`
   color: #ffffff;
@@ -234,7 +487,7 @@ const PostBox = styled.form`
   width: 100%;
 
   border-radius: 16px;
-  background-color: #171717;
+  background-color: ${(props) => (props.isRepost ? "#505050" : "#171717")};
   margin-bottom: 16px;
   display: flex;
 `;
@@ -479,4 +732,71 @@ const ImageUrl = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
+`;
+
+const ScreeDelete = styled.div`
+  display: ${(prop) => (prop.postDelete ? "initial" : "none")};
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+
+  z-index: 100;
+  opacity: 0.7;
+`;
+
+const AskDelete = styled.div`
+  height: 262px;
+  width: 597px;
+  opacity: 1;
+  border-radius: 50px;
+  position: fixed;
+  left: 353px;
+  top: 169px;
+  background-color: #333333;
+  z-index: 101;
+  text-align: center;
+  display: ${(prop) => (prop.postDelete ? "flex" : "none")};
+  flex-direction: column;
+  justify-content: space-around;
+  a {
+    font-family: "Lato", sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 41px;
+    letter-spacing: 0em;
+  }
+`;
+const NoDelete = styled.div`
+  height: 37px;
+  width: 134px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #1877f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const YesDelete = styled.div`
+  height: 37px;
+  width: 134px;
+  border-radius: 5px;
+  background-color: #1877f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; ;
+`;
+
+const OptionYN = styled.div`
+  width: 300px;
+  height: 45px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 159px;
 `;
