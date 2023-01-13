@@ -6,20 +6,23 @@ import UserInfosPost from "./UserInfosPost";
 import CreatePost from "./components/createPost";
 import UserTableTrending from "./components/UserTableTrending";
 import TopBar from "./components/TopBar";
+import InfosPost from "./InfosPost";
 import FollowButton from "./components/FollowButton";
+
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);
   const [postNotifications, setPostNotifications] = useState(false);
   const [load, setLoad] = useState(true);
   const { id } = useParams();
-  console.log("to no info", id);
+  console.log("deu refresh");
 
   useEffect(() => {
     const promisse = axios.get(`http://localhost:5001/user/${id}`);
 
     promisse.then((res) => {
-      /* console.log(res.data); */
+      console.log("resUserPage: ", res.data);
+
       setPosts(res.data);
       setLoad(false);
 
@@ -27,12 +30,13 @@ export default function Timeline() {
         setPostNotifications(false);
       }
     });
+
     promisse.catch(() =>
       alert(
         "An error occured while trying to fetch the posts, please refresh the page"
       )
     );
-  }, [postNotifications]);
+  }, [postNotifications, id]);
 
   // console.log("dados vindo do back =>", id, Posts);
 
@@ -61,9 +65,11 @@ export default function Timeline() {
                 <a>There are no posts yet</a>
               </Notification>
               {posts.map((post) => (
-                <UserInfosPost
-                  key={post.id}
-                  postId={post.id}
+                <InfosPost
+                  key={post.date}
+                  posterId={post["user-id"]}
+                  postId={post["post-id"]}
+                  repostId={post["repost-id"]}
                   username={post.username}
                   image={post.image}
                   url={post.url}

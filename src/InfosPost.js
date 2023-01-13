@@ -9,8 +9,10 @@ import axios from "axios";
 import deletePost from "./utils/deletePost";
 
 export default function InfosPost({
+  posterId,
   postId,
   setHashtagReload,
+  repostId,
   postNotifications,
   username,
   image,
@@ -35,6 +37,11 @@ export default function InfosPost({
   const [editingPostText, setEditingPostText] = useState("");
   const navigate = useNavigate();
 
+  let newPostId = postId;
+  if (newPostId === null) {
+    newPostId = repostId;
+  }
+
   function redirectHash(m) {
     let newTag = "";
 
@@ -57,7 +64,9 @@ export default function InfosPost({
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5001/postlikes/${postId}`, {
+
+    const promisse = axios.get(`http://localhost:5000/postlikes/${newPostId}`, {
+
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -83,7 +92,7 @@ export default function InfosPost({
 
   function liked() {
     const object = {
-      postId: postId,
+      postId: newPostId,
     };
 
     if (!likeUser) {
@@ -95,6 +104,7 @@ export default function InfosPost({
         console.log(res);
         setLikeUser(true);
       });
+
       promisse.catch((err) => {
         console.log(err);
         alert(
@@ -183,7 +193,7 @@ export default function InfosPost({
 
         <PostContent>
           <PostHeader>
-            <Link to={`/user/${usersId}`}>
+            <Link to={`/user/${posterId}`}>
               <h1>{username}</h1>{" "}
             </Link>
             <Interactions>
@@ -195,10 +205,11 @@ export default function InfosPost({
                     : setEditingPost(true);
                 }}
               />{" "}
-              <BsFillTrashFill onClick={() => {
-                openAsk()
-                    ;
-                  }}
+
+              <BsFillTrashFill
+                onClick={() => {
+                  deletePost(newPostId);
+                }}
 
               />{" "}
               <ScreeDelete postDelete ={postDelete}>

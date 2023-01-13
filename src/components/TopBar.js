@@ -17,7 +17,7 @@ const TopBar = () => {
 
       e.preventDefault();
     }
-    // console.log(e.target.name, e.target.value )
+
     setQuerys(e.target.value);
   }
 
@@ -28,22 +28,29 @@ const TopBar = () => {
       try {
         const response = await axios.post(`http://localhost:5001/search`, body);
         setSearcheUsers(response.data);
+        console.log(response.data);
       } catch ({ response }) {
         alert(response.data.message);
       }
     }
     sendForm();
   }, [querys]);
+
+  function goToUser(userObj) {
+    navigate(`/user/${userObj.id}`);
+    setSearcheUsers([]);
+    setQuerys({ value: "" });
+  }
+
   function ResutUsers() {
     return searchUsers.map((user) => {
       console.log("TO NO TOPPPPP =>", user);
+
       return (
-        <Link to={`/user/${user.id}`}>
-          <UserFound>
-            <UserFoundImg src={user.image} />
-            <UserFoundName>{user.username}</UserFoundName>
-          </UserFound>
-        </Link>
+        <UserFound onClick={() => goToUser(user)}>
+          <UserFoundImg src={user.image} />
+          <UserFoundName>{user.username}</UserFoundName>
+        </UserFound>
       );
     });
   }
@@ -152,6 +159,7 @@ const UserFound = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 12px;
+  cursor: pointer;
 `;
 const UserFoundName = styled.h1`
   padding-left: 15px;
