@@ -24,7 +24,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5001/publish`,
+        `http://localhost:5000/publish`,
         publishPostObject,
         {
           headers: { Authorization: `Bearer ${authToken}` },
@@ -64,8 +64,9 @@ const CreatePost = () => {
 // Styled components
 
 const CreatePostBackground = styled.div`
-  height: 250px;
+  
   width: 100%;
+  height: 209px;
 
   background-color: white;
   border-radius: 16px;
@@ -75,6 +76,8 @@ const CreatePostBackground = styled.div`
 
   padding-inline: 18px;
   padding-block: 16px;
+
+  margin-bottom: 40px;
 `;
 
 const MainContentForm = styled.form`

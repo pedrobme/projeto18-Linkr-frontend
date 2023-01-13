@@ -24,6 +24,20 @@ export default function Login() {
     wait();
   };
 
+  const getUserInfo = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/timeline/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
+
+      setUserInfo(response.data[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
       const userInfo = getUserInfo();
@@ -36,7 +50,7 @@ export default function Login() {
   function logar(event) {
     event.preventDefault();
 
-    const requisicao = axios.post(`http://localhost:5001/signin`, {
+    const requisicao = axios.post(`http://localhost:5000/signin`, {
       email,
       password,
     });
