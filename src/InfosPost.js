@@ -223,6 +223,20 @@ export default function InfosPost({
     setPostDelete(false);
   }
 
+  function repostPost(postId) {
+    try {
+      // LUCAS ADICIONAR TELA DE CONFIRMAÇÃO ANTES DE PASSAR POR ESSE POST //
+
+      axios.post(`http://localhost:5001/repost/${postId}`, [], {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+
+      window.location.reload();
+    } catch (err) {
+      console.log("repostPost err", err);
+    }
+  }
+
   return (
     <>
       <PostBox isRepost={isRepost} username={posterUsername}>
@@ -247,7 +261,7 @@ export default function InfosPost({
               <p>comments</p>
             </ViewComment>
           </ViewComments>
-          <RepostDiv>
+          <RepostDiv onClick={() => repostPost(newPostId)}>
             <BiRepost />
             <p>10 re-posts</p>
           </RepostDiv>
@@ -392,6 +406,10 @@ const SendComment = styled.div`
     color: #575757;
   }
 
+  svg {
+    cursor: pointer;
+  }
+
   padding-top: 40px;
   padding-left: 25px;
   padding-bottom: 25px;
@@ -399,10 +417,10 @@ const SendComment = styled.div`
 const AllComents = styled.div`
   display: flex;
   flex-direction: column;
-  width: 720px;
+  width: 100%;
   background: #1e1e1e;
   border-radius: 16px;
-  margin-top: -30px;
+  margin-top: -40px;
   margin-bottom: 44px;
   padding-bottom: 25px;
 `;
@@ -460,6 +478,8 @@ const UserComments = styled.div`
   }
 `;
 const ViewComments = styled.div`
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
 
@@ -487,6 +507,8 @@ const ViewComment = styled.div`
 `;
 
 const RepostDiv = styled.div`
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
 
@@ -516,8 +538,10 @@ const PostBox = styled.form`
 
   display: flex;
 
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+
+  z-index: 2;
 `;
 
 const LeftPannel = styled.div`
@@ -528,11 +552,10 @@ const LeftPannel = styled.div`
 
   justify-content: space-around;
 
-  height: 100%;
+  height: 90%;
 
-  width: 15%;
+  width: 8%;
 
-  padding-bottom: 10px;
   svg {
     font-size: 25px;
   }
@@ -549,6 +572,7 @@ const UserPhoto = styled.div`
   }
 `;
 const LikePost = styled.div`
+  cursor: pointer;
   .hover {
     display: none;
   }
@@ -598,7 +622,7 @@ const LikePost = styled.div`
 `;
 
 const PostContent = styled.div`
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
