@@ -24,7 +24,7 @@ const TopBar = () => {
       const body = { querys };
 
       try {
-        const response = await axios.post(`http://localhost:5000/search`, body);
+        const response = await axios.post(`http://localhost:4000/search`, body);
         setSearcheUsers(response.data);
       } catch ({ response }) {
         alert(response.data.message);

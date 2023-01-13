@@ -16,10 +16,10 @@ export default function Timeline() {
   console.log("to no info", id);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/user/${id}`);
+    const promisse = axios.get(`http://localhost:4000/user/${id}`);
 
     promisse.then((res) => {
-      /* console.log(res.data); */
+      console.log(res.data); 
       setPosts(res.data);
       setLoad(false);
 

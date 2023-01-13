@@ -7,7 +7,7 @@ export default function TableTrending({ hashtagReload, setHashtagReload }) {
   const [hashtags, setHashtags] = useState([]);
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/trending`);
+    const promisse = axios.get(`http://localhost:4000/trending`);
 
     promisse.then((res) => {
       console.log(res.data);
