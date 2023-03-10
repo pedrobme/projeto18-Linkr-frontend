@@ -87,7 +87,7 @@ export default function Timeline() {
         <Box1>
 
           <Posts>
-            <CreatePost userInfo={userInfo} />
+            <CreatePost userInfo={userInfo} data-test="publish-box" />
 
             <LoadingPost load={load}>
               <a>Loading...</a>
@@ -106,6 +106,7 @@ export default function Timeline() {
             >
               {posts === null ? <></> : posts.map((post) => (
                 <InfosPost
+                  data-test="post"
                   key={post.date}
                   posterId={post["user-id"]}
                   posterUsername={post["post-creator-name"]}

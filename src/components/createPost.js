@@ -47,15 +47,17 @@ const CreatePost = () => {
       <MainContentForm onSubmit={handleSubmit}>
         <h3>What are you going o share today?</h3>
         <input
+          data-test="link"
           onChange={(event) => setLink(event.target.value)}
           placeholder="Link: http://..."
         ></input>
         <input
+          data-test="description" 
           onChange={(event) => setText(event.target.value)}
           placeholder="Type details about your post (optional)"
         ></input>
         <ButtonPhantom></ButtonPhantom>
-        <button type="submit">Publicar</button>
+        <button type="submit" data-test="publish-btn">Publicar</button>
       </MainContentForm>
     </CreatePostBackground>
   );
