@@ -53,7 +53,7 @@ export default function InfosPost({
   const navigate = useNavigate();
 
   function sendComments() {
-    const request = axios.post(`http://localhost:5000/comment`, {
+    const request = axios.post(`https://linker-api-4331.onrender.com/comment`, {
       comment: commentUser,
       userId: count.id,
       postId: postId,
@@ -108,7 +108,7 @@ export default function InfosPost({
       setIsRepost(true);
     }
 
-    const promisse = axios.get(`http://localhost:5000/postlikes/${newPostId}`, {
+    const promisse = axios.get(`https://linker-api-4331.onrender.com/postlikes/${newPostId}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -133,7 +133,7 @@ export default function InfosPost({
   }, [likeUser]);
 
   useEffect(() => {
-    const promis = axios.get(`http://localhost:5000/comment/${postId}`);
+    const promis = axios.get(`https://linker-api-4331.onrender.com/comment/${postId}`);
 
     promis.then((res) => {
       setCount(res.data);
@@ -148,7 +148,7 @@ export default function InfosPost({
     };
 
     if (!likeUser) {
-      const promisse = axios.post(`http://localhost:5000/liked`, object, {
+      const promisse = axios.post(`https://linker-api-4331.onrender.com/liked`, object, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -166,7 +166,7 @@ export default function InfosPost({
       return;
     }
 
-    const promisse = axios.post(`http://localhost:5000/desliked`, object, {
+    const promisse = axios.post(`https://linker-api-4331.onrender.com/desliked`, object, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -229,7 +229,7 @@ export default function InfosPost({
     try {
       // LUCAS ADICIONAR TELA DE CONFIRMAÇÃO ANTES DE PASSAR POR ESSE POST //
 
-      axios.post(`http://localhost:5001/repost/${postId}`, [], {
+      axios.post(`https://linker-api-4331.onrender.com/repost/${postId}`, [], {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 

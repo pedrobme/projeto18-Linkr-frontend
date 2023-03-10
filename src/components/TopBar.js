@@ -26,7 +26,7 @@ const TopBar = () => {
       const body = { querys };
 
       try {
-        const response = await axios.post(`http://localhost:5000/search`, body);
+        const response = await axios.post(`https://linker-api-4331.onrender.com/search`, body);
         setSearcheUsers(response.data);
         console.log(response.data);
       } catch ({ response }) {

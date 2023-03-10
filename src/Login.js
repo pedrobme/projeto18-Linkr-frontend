@@ -26,7 +26,7 @@ export default function Login() {
 
   const getUserInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/timeline/me", {
+      const response = await axios.get("https://linker-api-4331.onrender.com/timeline/me", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
@@ -50,7 +50,7 @@ export default function Login() {
   function logar(event) {
     event.preventDefault();
 
-    const requisicao = axios.post(`http://localhost:5000/signin`, {
+    const requisicao = axios.post(`https://linker-api-4331.onrender.com/signin`, {
       email,
       password,
     });

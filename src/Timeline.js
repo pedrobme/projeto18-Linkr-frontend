@@ -23,7 +23,7 @@ export default function Timeline() {
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const promisse = axios.get(`http://localhost:5000/timeline`, {
+    const promisse = axios.get(`https://linker-api-4331.onrender.com/timeline`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
 
@@ -46,7 +46,7 @@ export default function Timeline() {
   }, []);
 
   function loadFunc() {
-    axios.get(`http://localhost:5000/timeline?page=${page}`, {
+    axios.get(`https://linker-api-4331.onrender.com/timeline?page=${page}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     })
 
@@ -167,7 +167,7 @@ const TimelineTitle = styled.h3`
                 `;
 
 const Posts = styled.div`
-background-color: blue;
+
 
                 margin-top: 29px;
                 display: flex;

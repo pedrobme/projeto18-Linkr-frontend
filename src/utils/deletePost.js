@@ -5,7 +5,7 @@ export default async function deletePost(postId) {
 
   try {
     const response = await axios.delete(
-      `http://localhost:5000/timeline/${postId}`
+      `https://linker-api-4331.onrender.com/timeline/${postId}`
     );
 
     console.log(response);

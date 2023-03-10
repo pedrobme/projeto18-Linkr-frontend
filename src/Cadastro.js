@@ -25,7 +25,7 @@ export default function Cadastro() {
 
   function cadastrar(event) {
     event.preventDefault();
-    const requisicao = axios.post(`http://localhost:5000/signup`, {
+    const requisicao = axios.post(`https://linker-api-4331.onrender.com/signup`, {
       email,
       password,
       username,

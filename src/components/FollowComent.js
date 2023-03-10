@@ -7,7 +7,7 @@ export default function FollowComment({userId}){
     
 
     useEffect(()=> {
-        const promisse = axios.get(`http://localhost:5000/followers/${userId}`, {
+        const promisse = axios.get(`https://linker-api-4331.onrender.com/followers/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           });
 
